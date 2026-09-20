@@ -8,7 +8,7 @@ public class CarpetShadowLegacySettings {
     public static final String SHADOW = "shadow_items";
     @Rule( categories = {SHADOW, BUGFIX})
     public static Mode shadowItemMode = Mode.PERSIST;
-    @Rule( categories = {SHADOW})
+    @Rule( categories = {SHADOW, FEATURE})
     public static int shadowItemIdSize = 5;
     @Rule( categories = {SHADOW, FEATURE})
     public static boolean shadowSuppressionGeneration = false;
@@ -20,11 +20,11 @@ public class CarpetShadowLegacySettings {
     public static boolean shadowItemInventoryFragilityFix = false;
     @Rule( categories = {SHADOW, BUGFIX})
     public static boolean shadowItemTransferFragilityFix = false;
-    @Rule( categories = {SHADOW, BUGFIX, EXPERIMENTAL})
+    @Rule( categories = {SHADOW, BUGFIX})
     public static boolean shadowItemUpdateFix = false;
-    @Rule( categories = {SHADOW, OPTIMIZATION, FEATURE})
+    @Rule( categories = {SHADOW, FEATURE})
     public static boolean shadowItemPreventCombine = false;
-    @Rule( categories = {SHADOW, OPTIMIZATION, FEATURE})
+    @Rule( categories = {SHADOW, FEATURE})
     public static boolean shadowItemUseFix = false;
 
     public enum Mode{

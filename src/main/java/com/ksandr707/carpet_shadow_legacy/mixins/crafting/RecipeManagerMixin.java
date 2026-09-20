@@ -3,7 +3,6 @@ package com.ksandr707.carpet_shadow_legacy.mixins.crafting;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.gson.JsonElement;
-import com.ksandr707.carpet_shadow_legacy.CarpetShadowLegacy;
 import com.ksandr707.carpet_shadow_legacy.CarpetShadowLegacySettings;
 import com.ksandr707.carpet_shadow_legacy.Globals;
 import com.ksandr707.carpet_shadow_legacy.interfaces.ShadowItem;
@@ -23,15 +22,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Mixin(RecipeManager.class)
 public class RecipeManagerMixin {
-    @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableMap;builder()Lcom/google/common/collect/ImmutableMap$Builder;", shift = At.Shift.BY, by=2))
+    @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V",
+            at = @At(value = "INVOKE",
+                    target = "Lcom/google/common/collect/ImmutableMap;builder()Lcom/google/common/collect/ImmutableMap$Builder;",
+                    shift = At.Shift.BY,
+                    by=2)
+    )
     private void addShadowRecipe(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci, @Local(ordinal = 0) ImmutableMultimap.Builder<RecipeType<?>, RecipeEntry<?>> builder, @Local(ordinal = 0) ImmutableMap.Builder<Identifier, RecipeEntry<?>> builder2){
-        Identifier identifier = Identifier.of("carpet_shadow","shadow_recipe");
+        Identifier identifier = Identifier.of("carpet_shadow_legacy","shadow_recipe");
         Recipe<?> recipe = new BookCloningRecipe(CraftingRecipeCategory.MISC) {
             @Override
             public boolean matches(CraftingRecipeInput inventory, World world) {
@@ -39,16 +41,12 @@ public class RecipeManagerMixin {
                     return false;
 
                 boolean enderchest = false;
-                List<ItemStack> stacks = new ArrayList<>();
                 int count = 0;
                 for(int i = 0; i < inventory.getSize(); ++i) {
                     ItemStack itemStack2 = inventory.getStackInSlot(i);
                     if (!itemStack2.isEmpty()) {
-                        if (itemStack2.getItem().equals(Items.ENDER_CHEST) && !enderchest)
+                        if (itemStack2.getItem().equals(Items.ENDER_CHEST))
                             enderchest = true;
-                        else {
-                            stacks.add(itemStack2);
-                        }
                         count++;
                     }
                 }
@@ -65,11 +63,11 @@ public class RecipeManagerMixin {
                 for(int i = 0; i < inventory.getSize(); ++i) {
                     ItemStack itemStack2 = inventory.getStackInSlot(i);
                     if (!itemStack2.isEmpty()) {
-                        if (itemStack2.getItem().equals(Items.ENDER_CHEST) && itemStack2.getCount() == 1) {
+                        if (itemStack2.getItem().equals(Items.ENDER_CHEST)) {
                             if (enderchest != null)
                                 item = enderchest;
                             enderchest = itemStack2;
-                        }else
+                        } else
                             item = itemStack2;
                     }
                 }
@@ -94,7 +92,7 @@ public class RecipeManagerMixin {
                             if (enderchest != null)
                                 item = enderchest;
                             enderchest = itemStack2;
-                        }else
+                        } else
                             item = itemStack2;
                     }
                 }

@@ -1,4 +1,4 @@
-package com.ksandr707.carpet_shadow_legacy.mixins.hand_update_fix;
+package com.ksandr707.carpet_shadow_legacy.mixins.fragility;
 
 import com.ksandr707.carpet_shadow_legacy.CarpetShadowLegacySettings;
 import com.ksandr707.carpet_shadow_legacy.interfaces.ShadowItem;

@@ -34,7 +34,7 @@ public abstract class ItemStackMixin implements ItemEntitySlot, ShifingItem {
 
     @ModifyReturnValue(method = "areItemsAndComponentsEqual", at = @At("RETURN"))
     private static boolean check_combine(boolean original, ItemStack stack, ItemStack otherStack) {
-        return Globals.shadow_merge_check(stack, otherStack, original);
+        return Globals.shadowMergeCheck(stack, otherStack, original);
     }
 
     @Override
@@ -49,7 +49,7 @@ public abstract class ItemStackMixin implements ItemEntitySlot, ShifingItem {
 
     @ModifyReturnValue(method = "areItemsEqual", at = @At("RETURN"))
     private static boolean check_EqualIgnoreDamage(boolean original, ItemStack left, ItemStack right) {
-        return Globals.shadow_merge_check(left, right, original);
+        return Globals.shadowMergeCheck(left, right, original);
     }
 
     @ModifyReturnValue(method = "areEqual", at = @At("RETURN"))

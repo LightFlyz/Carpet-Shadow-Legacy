@@ -34,6 +34,7 @@ import java.util.Optional;
                 }
             }
 
+            //Compatibility with Carpet Shadow
             if (nbt instanceof NbtCompound compound && compound.contains("shadow")) {
                 if (CarpetShadowLegacySettings.shadowItemMode.shouldResetCount()) {
                     stack.setCount(0);
@@ -42,6 +43,24 @@ import java.util.Optional;
                 ((ShadowItem) (Object) stack).setShadowId(shadowId);
                 stack = Globals.getByIdOrAdd(shadowId, stack);
                 return Optional.of(stack);
+                }
+            }
+
+            //Compatibility with Carpet Shadow Legacy <1.0.3
+            if (nbt instanceof NbtCompound compound && compound.contains("components", NbtElement.COMPOUND_TYPE)) {
+                NbtCompound components = compound.getCompound("components");
+                if (components.contains("carpet-shadow:shadow", NbtElement.COMPOUND_TYPE)) {
+                    NbtCompound shadowComponent = components.getCompound("carpet-shadow:shadow");
+                    if (shadowComponent.contains("shadow_id", NbtElement.STRING_TYPE)) {
+                        if (CarpetShadowLegacySettings.shadowItemMode.shouldResetCount()) {
+                            stack.setCount(0);
+                        } else if (CarpetShadowLegacySettings.shadowItemMode.shouldLoadItem()) {
+                            shadowId = shadowComponent.getString("shadow_id");
+                            ((ShadowItem) (Object) stack).setShadowId(shadowId);
+                            stack = Globals.getByIdOrAdd(shadowId, stack);
+                            return Optional.of(stack);
+                        }
+                    }
                 }
             }
         }

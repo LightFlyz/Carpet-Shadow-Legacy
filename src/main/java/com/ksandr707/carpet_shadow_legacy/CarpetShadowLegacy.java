@@ -21,7 +21,8 @@ import java.util.Collections;
 import java.util.Map;
 
 public class CarpetShadowLegacy implements CarpetExtension, ModInitializer {
-    public static final Cache<String, ItemStack> shadowMap = CacheBuilder.newBuilder().weakValues().build();
+    public static final ThreadLocal<Cache<String, ItemStack>> shadowMap =
+            ThreadLocal.withInitial(() -> CacheBuilder.newBuilder().weakValues().build());
     public static final Logger LOGGER = LogManager.getLogger("Carpet-Shadow-Legacy");
 
     @Override
@@ -37,13 +38,13 @@ public class CarpetShadowLegacy implements CarpetExtension, ModInitializer {
 
     @Override
     public void onServerLoaded(MinecraftServer server) {
-        shadowMap.invalidateAll();
+        shadowMap.get().invalidateAll();
     }
 
     @Override
     public void onTick(MinecraftServer server) {
         if (server.getTicks() % 1000 == 0)
-            CarpetShadowLegacy.shadowMap.cleanUp();
+            CarpetShadowLegacy.shadowMap.get().cleanUp();
     }
 
     @Override
