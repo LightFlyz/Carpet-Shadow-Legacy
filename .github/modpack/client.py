@@ -68,6 +68,13 @@ index["files"].append({"path": "mods/" + jar_url.rsplit("/", 1)[1], "hashes": {"
                        "env": {"client": "required", "server": "required"}, "downloads": [jar_url], "fileSize": len(data)})
 report.append(f"ADD  {'Carpet Shadow Legacy (classic)':30} {os.environ['CSL_TAG']}")
 
+# 3) extra GitHub-hosted jars (our McMouser 26.3 port)
+for url in filter(None, os.environ.get("EXTRA_URLS", "").split()):
+    d = req(url, raw=True)
+    index["files"].append({"path": "mods/" + url.rsplit("/", 1)[1], "hashes": {"sha1": hashlib.sha1(d).hexdigest(), "sha512": hashlib.sha512(d).hexdigest()},
+                           "env": {"client": "required", "server": "unsupported"}, "downloads": [url], "fileSize": len(d)})
+    report.append(f"ADD  {url.rsplit('/', 1)[1]:30} (GitHub)")
+
 index["name"] = "Fabulously Optimized + LightFly"
 index["versionId"] = f"{fov['version_number']}-lightfly"
 index["summary"] = "Fabulously Optimized 26.3 with LightFly's extra mods, Carpet and Carpet Shadow Legacy (classic)"

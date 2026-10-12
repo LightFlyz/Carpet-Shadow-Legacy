@@ -16,6 +16,8 @@ jobs:
           TAG=$(gh release list --limit 50 --json tagName --jq '[.[] | select(.tagName | startswith("26.3-build-"))] | sort_by(.tagName | ltrimstr("26.3-build-") | tonumber) | last | .tagName')
           export CSL_TAG=$TAG
           export CSL_URL=$(gh release view "$TAG" --json assets --jq '.assets[] | select(.name | endswith(".jar")) | .url')
+          for i in $(seq 1 30); do MM=$(gh release view mcmouser-26.3 --json assets --jq '.assets[] | select(.name | startswith("mcmouser-")) | .url' 2>/dev/null); [ -n "$MM" ] && break; sleep 20; done
+          export EXTRA_URLS="$MM"
           python3 .github/modpack/client.py
       - name: Publish
         env:

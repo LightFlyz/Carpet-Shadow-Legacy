@@ -46,7 +46,6 @@ YetAnotherConfigLib|yacl
 FastQuit|fastquit
 Remove Reloading Screen|rrls
 Fabric API|fabric-api
-Capes|capes
 Bobby|bobby
 Sound Controller|sound-controller
 Chat Heads|chat-heads
