@@ -1,0 +1,58 @@
+Dynamic FPS|dynamic-fps
+Lithium|lithium
+More Culling|moreculling
+Debugify|debugify
+Fabric Language Kotlin|fabric-language-kotlin
+Language Reload|language-reload
+Model Gap Fix|model-gap-fix
+Sodium Extra|sodium-extra
+Puzzle|puzzle
+Continuity|continuity
+FabricSkyBoxes|fabricskyboxes
+AdvancementInfo|advancementinfo
+Enhanced Block Entities|ebe
+MoreChatHistory|morechathistory
+Fadeless|fadeless
+Better Mount HUD|better-mount-hud
+CIT Resewn|cit-resewn
+e4mc|e4mc
+Memory Leak Fix|memoryleakfix
+Controlify|controlify
+Indium|indium
+Main Menu Credits|main-menu-credits
+Borderless Mining|borderless-mining
+LambDynamicLights|lambdynamiclights
+Entity Model Features|entity-model-features
+McMouser|mcmouser
+ModernFix|modernfix
+MixinTrace|mixintrace
+OptiGUI|optigui
+Cloth Config|cloth-config
+ImmediatelyFast|immediatelyfast
+Zoomify|zoomify
+Animatica|animatica
+FerriteCore|ferrite-core
+Fabrishot|fabrishot
+Sodium|sodium
+FabricSkyBoxes Interop|fabricskyboxes-interop
+Entity Texture Features|entitytexturefeatures
+Mod Menu|modmenu
+Iris|iris
+YOSBR|yosbr
+EntityCulling|entityculling
+No Chat Reports|no-chat-reports
+Reese's Sodium Options|reeses-sodium-options
+YetAnotherConfigLib|yacl
+FastQuit|fastquit
+Remove Reloading Screen|rrls
+Fabric API|fabric-api
+Capes|capes
+Bobby|bobby
+Sound Controller|sound-controller
+Chat Heads|chat-heads
+Shulker Box Tooltip|shulkerboxtooltip
+Full Brightness Toggle|fullbrightnesstoggle
+Collective|collective
+WorldEdit|worldedit
+Axiom|axiom
+Carpet|carpet

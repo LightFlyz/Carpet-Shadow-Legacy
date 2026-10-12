@@ -1,0 +1,25 @@
+name: client-pack
+on:
+  push:
+    branches: ['modpack']
+permissions:
+  contents: write
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build mrpack
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG=$(gh release list --limit 50 --json tagName --jq '[.[] | select(.tagName | startswith("26.3-build-"))] | sort_by(.tagName | ltrimstr("26.3-build-") | tonumber) | last | .tagName')
+          export CSL_TAG=$TAG
+          export CSL_URL=$(gh release view "$TAG" --json assets --jq '.assets[] | select(.name | endswith(".jar")) | .url')
+          python3 .github/modpack/client.py
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete client-26.3 --yes --cleanup-tag 2>/dev/null || true
+          gh release create client-26.3 LightFly-26.3.mrpack client-report.txt --target "${{ github.sha }}" --title "Client modpack for 26.3" --notes-file client-report.txt --prerelease
