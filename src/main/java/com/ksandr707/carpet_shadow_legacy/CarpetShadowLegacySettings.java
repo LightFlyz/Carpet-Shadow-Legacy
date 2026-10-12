@@ -19,6 +19,8 @@ public class CarpetShadowLegacySettings {
     public static boolean classicUpdateSuppression = false;
     @Rule( categories = {SHADOW, FEATURE, EXPERIMENTAL}, options = {"0", "100", "200", "300"}, strict = false, validators = {NonNegative.class})
     public static int classicUpdateSuppressionDepth = 0;
+    @Rule( categories = {SHADOW, CREATIVE})
+    public static boolean shadowDebugLog = false;
     @Rule( categories = {SHADOW, BUGFIX})
     public static boolean updateSuppressionCrashFix = false;
     @Rule( categories = {SHADOW, FEATURE})

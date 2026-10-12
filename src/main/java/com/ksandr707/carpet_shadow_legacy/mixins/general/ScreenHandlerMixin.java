@@ -38,9 +38,19 @@ public abstract class ScreenHandlerMixin {
             )
     )
     private void handle_shadowing(AbstractContainerMenu instance, int slotIndex, int button, ContainerInput actionType, Player player, Operation<Void> original) {
+        if (CarpetShadowLegacySettings.shadowDebugLog)
+            CarpetShadowLegacy.LOGGER.info("[shadowDebug] click menu={} type={} slot={} button={} slotItem={} hotbarItem={} carried={} creative={}",
+                    instance.getClass().getSimpleName(), actionType, slotIndex, button,
+                    slotIndex >= 0 && slotIndex < instance.slots.size() ? instance.getSlot(slotIndex).getItem() : "-",
+                    button >= 0 && button < player.getInventory().getContainerSize() ? player.getInventory().getItem(button) : "-",
+                    instance.getCarried(), player.hasInfiniteMaterials());
         try {
             original.call(instance, slotIndex, button, actionType, player);
+            if (CarpetShadowLegacySettings.shadowDebugLog)
+                CarpetShadowLegacy.LOGGER.info("[shadowDebug] click finished normally (no suppression during the click)");
         } catch (Throwable error) {
+            if (CarpetShadowLegacySettings.shadowDebugLog)
+                CarpetShadowLegacy.LOGGER.info("[shadowDebug] suppression during click: {}", error.toString());
             if (actionType != ContainerInput.SWAP && actionType != ContainerInput.PICKUP && actionType != ContainerInput.QUICK_CRAFT)
                 throw error;
             ItemStack stack1 = this.getSlot(slotIndex).getItem();
@@ -52,6 +62,8 @@ public abstract class ScreenHandlerMixin {
             else if (stack2 == stack3)
                 shadow = stack2;
 
+            if (CarpetShadowLegacySettings.shadowDebugLog)
+                CarpetShadowLegacy.LOGGER.info("[shadowDebug] after: slotItem={} hotbarItem={} carried={} -> shadow={}", stack1, stack2, stack3, shadow != null);
             if (shadow != null) {
                 CarpetShadowLegacy.LOGGER.warn("New Shadow Item Created");
                 String shadow_id = ((ShadowItem) (Object) shadow).getShadowId();
