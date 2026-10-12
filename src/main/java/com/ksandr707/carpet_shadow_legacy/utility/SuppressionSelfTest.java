@@ -22,7 +22,7 @@ public final class SuppressionSelfTest {
                     super.setChanged();
                 }
             };
-            net.minecraft.world.inventory.ChestMenu menu = net.minecraft.world.inventory.ChestMenu.oneRow(1, player.getInventory(), box);
+            net.minecraft.world.inventory.ChestMenu menu = new net.minecraft.world.inventory.ChestMenu(net.minecraft.world.inventory.MenuType.GENERIC_9x1, 1, player.getInventory(), box, 1);
             net.minecraft.world.item.ItemStack diamonds = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 5);
             player.getInventory().setItem(0, diamonds);
             try {
