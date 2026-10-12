@@ -27,5 +27,8 @@
   "carpet.rule.classicUpdateSuppression.desc": "Restores pre-1.19 recursive neighbor updates, bringing back classic stack-overflow update suppression",
   "carpet.rule.classicUpdateSuppression.extra.0": "WARNING: suppressors can crash the server, enable updateSuppressionCrashFix too",
   "carpet.rule.updateSuppressionCrashFix.name": "updateSuppressionCrashFix",
-  "carpet.rule.updateSuppressionCrashFix.desc": "Prevents the server from crashing when update suppression happens during a world tick"
+  "carpet.rule.updateSuppressionCrashFix.desc": "Prevents the server from crashing when update suppression happens during a world tick",
+  "carpet.rule.classicUpdateSuppressionDepth.name": "classicUpdateSuppressionDepth",
+  "carpet.rule.classicUpdateSuppressionDepth.desc": "Max recursion depth of classic update chains before they suppress (0 = only on a real stack overflow)",
+  "carpet.rule.classicUpdateSuppressionDepth.extra.0": "Check the log for 'Classic update chain finished, max depth N' and set this below N"
 }

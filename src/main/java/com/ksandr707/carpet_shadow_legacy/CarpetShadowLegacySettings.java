@@ -17,6 +17,8 @@ public class CarpetShadowLegacySettings {
     public static boolean shadowSuppressionGeneration = false;
     @Rule( categories = {SHADOW, FEATURE, EXPERIMENTAL})
     public static boolean classicUpdateSuppression = false;
+    @Rule( categories = {SHADOW, FEATURE, EXPERIMENTAL}, options = {"0", "100", "200", "300"}, strict = false, validators = {NonNegative.class})
+    public static int classicUpdateSuppressionDepth = 0;
     @Rule( categories = {SHADOW, BUGFIX})
     public static boolean updateSuppressionCrashFix = false;
     @Rule( categories = {SHADOW, FEATURE})
@@ -33,6 +35,15 @@ public class CarpetShadowLegacySettings {
     public static boolean shadowItemPreventCombine = false;
     @Rule( categories = {SHADOW, OPTIMIZATION, FEATURE})
     public static boolean shadowItemUseFix = false;
+
+    private static class NonNegative extends Validator<Integer> {
+        @Override
+        public Integer validate(@Nullable CommandSourceStack source, CarpetRule<Integer> changingRule, Integer newValue, String userInput) {
+            return newValue != null && newValue >= 0 ? newValue : null;
+        }
+        @Override
+        public String description() { return "Must be 0 or larger"; }
+    }
 
     private static class IdSizeValidator extends Validator<Integer> {
         @Override

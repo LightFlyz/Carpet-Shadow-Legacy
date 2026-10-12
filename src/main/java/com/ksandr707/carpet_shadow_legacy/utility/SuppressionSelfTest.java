@@ -34,6 +34,21 @@ public final class SuppressionSelfTest {
                 }
             }
         }
+        CarpetShadowLegacySettings.classicUpdateSuppression = true;
+        CarpetShadowLegacySettings.classicUpdateSuppressionDepth = 100;
+        BlockPos base = new BlockPos(0, 150, 40);
+        try {
+            for (int x = 0; x < 400; x++) {
+                level.setBlock(base.offset(x, -1, 0), x % 8 == 0 ? Blocks.REDSTONE_BLOCK.defaultBlockState() : Blocks.STONE.defaultBlockState(), 2);
+                level.setBlock(base.offset(x, 0, 0), Blocks.POWERED_RAIL.defaultBlockState(), 2);
+            }
+            for (int x = 0; x < 400; x++) level.updateNeighborsAt(base.offset(x, 0, 0), Blocks.POWERED_RAIL);
+            for (int x = 0; x < 400; x += 8) level.setBlock(base.offset(x, -1, 0), Blocks.STONE.defaultBlockState(), 3);
+            CarpetShadowLegacy.LOGGER.info("CSL_SELFTEST limit=100 len=400 no throw");
+        } catch (Throwable t) {
+            CarpetShadowLegacy.LOGGER.info("CSL_SELFTEST limit=100 len=400 threw={} depthNow={}", t.getClass().getSimpleName(), UpdateDepth.DEPTH.get()[0]);
+        }
+        CarpetShadowLegacySettings.classicUpdateSuppressionDepth = 0;
         CarpetShadowLegacySettings.classicUpdateSuppression = false;
     }
 }
