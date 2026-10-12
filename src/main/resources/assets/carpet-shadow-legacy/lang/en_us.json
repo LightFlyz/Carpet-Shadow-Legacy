@@ -22,5 +22,10 @@
   "carpet.rule.shadowItemPreventCombine.name": "shadowItemPreventCombine",
   "carpet.rule.shadowItemPreventCombine.desc": "Prevent Merging any Shadow Item on base inventory movements",
   "carpet.rule.shadowItemUseFix.name": "shadowItemUseFix",
-  "carpet.rule.shadowItemUseFix.desc": "Prevents desync between client and server when using a fast refilling shadow stack"
+  "carpet.rule.shadowItemUseFix.desc": "Prevents desync between client and server when using a fast refilling shadow stack",
+  "carpet.rule.classicUpdateSuppression.name": "classicUpdateSuppression",
+  "carpet.rule.classicUpdateSuppression.desc": "Restores pre-1.19 recursive neighbor updates, bringing back classic stack-overflow update suppression",
+  "carpet.rule.classicUpdateSuppression.extra.0": "WARNING: suppressors can crash the server, enable updateSuppressionCrashFix too",
+  "carpet.rule.updateSuppressionCrashFix.name": "updateSuppressionCrashFix",
+  "carpet.rule.updateSuppressionCrashFix.desc": "Prevents the server from crashing when update suppression happens during a world tick"
 }

@@ -15,6 +15,10 @@ public class CarpetShadowLegacySettings {
     public static int shadowItemIdSize = 5;
     @Rule( categories = {SHADOW, FEATURE})
     public static boolean shadowSuppressionGeneration = false;
+    @Rule( categories = {SHADOW, FEATURE, EXPERIMENTAL})
+    public static boolean classicUpdateSuppression = false;
+    @Rule( categories = {SHADOW, BUGFIX})
+    public static boolean updateSuppressionCrashFix = false;
     @Rule( categories = {SHADOW, FEATURE})
     public static boolean shadowCraftingGeneration = false;
     @Rule( categories = {SHADOW, FEATURE})

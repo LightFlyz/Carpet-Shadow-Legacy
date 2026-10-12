@@ -4,7 +4,6 @@
   "package": "com.ksandr707.carpet_shadow_legacy.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "crafting.RecipeManagerMixin",
     "fragility.DropperBlockMixin",
     "fragility.HopperBlockEntityMixin",
     "fragility.ItemEntityMixin",
@@ -30,7 +29,9 @@
     "tooltip.InventoryS2CPacketMixin",
     "tooltip.ItemStackMixin",
     "tooltip.ScreenHandlerMixin",
-    "tooltip.ScreenHandlerSlotUpdateS2CPacketMixin"
+    "tooltip.ScreenHandlerSlotUpdateS2CPacketMixin",
+    "suppression.LevelMixin",
+    "suppression.MinecraftServerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
