@@ -23,7 +23,9 @@ jobs:
           set -o pipefail
           ./gradlew build --stacktrace 2>&1 | tee build.log
       - name: Server smoke test
+        id: smoke
         if: steps.build.outcome == 'success'
+        continue-on-error: true
         run: |
           mkdir -p run && echo "eula=true" > run/eula.txt
           printf 'online-mode=false\nlevel-type=minecraft\\:flat\nspawn-protection=0\n' > run/server.properties
@@ -54,17 +56,17 @@ jobs:
       - name: Publish log to ci-logs branch
         run: |
           mkdir /tmp/out && cp build.log api.txt /tmp/out/ && (cp server.log /tmp/out/ || true) && (cp -r mcsrc /tmp/out/ || true)
-          echo "${{ steps.build.outcome }} run ${{ github.run_number }} ${{ github.sha }}" > /tmp/out/status.txt
+          echo "${{ steps.build.outcome }} smoke=${{ steps.smoke.outcome }} run ${{ github.run_number }} ${{ github.sha }}" > /tmp/out/status.txt
           cd /tmp/out && git init -q -b ci-logs && git add -A
           git -c user.name=ci -c user.email=ci@localhost commit -q -m "logs run ${{ github.run_number }}"
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" ci-logs
       - name: Release jar
-        if: steps.build.outcome == 'success'
+        if: steps.build.outcome == 'success' && steps.smoke.outcome == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           J=$(ls build/libs/*.jar | grep -v sources | head -1)
           gh release create "26.3-build-${{ github.run_number }}" "$J" --target "${{ github.sha }}" --title "26.3 build ${{ github.run_number }}" --notes "Automated build" --prerelease
-      - name: Fail if build failed
-        if: steps.build.outcome != 'success'
+      - name: Fail if build or server test failed
+        if: steps.build.outcome != 'success' || steps.smoke.outcome != 'success'
         run: exit 1

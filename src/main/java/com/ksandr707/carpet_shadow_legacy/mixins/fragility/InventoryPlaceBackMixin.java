@@ -2,6 +2,7 @@ package com.ksandr707.carpet_shadow_legacy.mixins.fragility;
 
 import com.ksandr707.carpet_shadow_legacy.CarpetShadowLegacy;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,8 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(Inventory.class)
 public abstract class InventoryPlaceBackMixin {
-    @Inject(method = "placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;Z)V", at = @At("HEAD"), cancellable = true)
-    private void csl$skipShadowAlreadyInside(ItemStack stack, boolean sendPacket, CallbackInfo ci) {
+    @Inject(method = "placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;ZLnet/minecraft/util/Prediction;)V", at = @At("HEAD"), cancellable = true)
+    private void csl$skipShadowAlreadyInside(ItemStack stack, boolean sendPacket, Prediction prediction, CallbackInfo ci) {
         if (stack.isEmpty()) return;
         Inventory self = (Inventory) (Object) this;
         for (int i = 0; i < self.getContainerSize(); i++) {
