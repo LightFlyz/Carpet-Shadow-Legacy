@@ -4,6 +4,7 @@
   "package": "com.ksandr707.carpet_shadow_legacy.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "crafting.RecipeManagerMixin",
     "fragility.DropperBlockMixin",
     "fragility.HopperBlockEntityMixin",
     "fragility.ItemEntityMixin",

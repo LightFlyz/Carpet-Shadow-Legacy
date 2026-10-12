@@ -4,41 +4,33 @@ import com.ksandr707.carpet_shadow_legacy.CarpetShadowLegacy;
 import com.ksandr707.carpet_shadow_legacy.CarpetShadowLegacySettings;
 import com.ksandr707.carpet_shadow_legacy.Globals;
 import com.ksandr707.carpet_shadow_legacy.interfaces.ShadowItem;
-import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import java.util.SortedMap;
 
+import java.util.Optional;
+
+/**
+ * 26.3 removed the old recipe-loading hook, so instead of adding the shadow recipe to the
+ * loaded recipe map we answer crafting lookups for it directly.
+ */
 @Mixin(RecipeManager.class)
 public abstract class RecipeManagerMixin {
 
-    @Inject(
-            method = "prepare*",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/server/packs/resources/SimpleJsonResourceReloadListener;scanDirectory(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/FileToIdConverter;Lcom/mojang/serialization/DynamicOps;Lcom/mojang/serialization/Codec;Ljava/util/Map;)V",
-                    shift = At.Shift.AFTER
-            )
-    )
-    private void addShadowRecipe(
-            ResourceManager resourceManager,
-            ProfilerFiller profiler,
-            CallbackInfoReturnable<RecipeMap> cir,
-            @Local SortedMap<Identifier, Recipe<?>> sortedMap
-    ) {
-        Identifier identifier = Identifier.fromNamespaceAndPath("carpet_shadow_legacy", "shadow_recipe");
-        Recipe<?> recipe = new CustomRecipe() {
+    @Unique
+    private static final RecipeHolder<CraftingRecipe> CSL_SHADOW_RECIPE = new RecipeHolder<>(
+            ResourceKey.create(Registries.RECIPE, Identifier.fromNamespaceAndPath("carpet_shadow_legacy", "shadow_recipe")),
+            new CustomRecipe() {
             @Override
             public RecipeSerializer<? extends CustomRecipe> getSerializer() {
                 return BookCloningRecipe.SERIALIZER;
@@ -114,7 +106,28 @@ public abstract class RecipeManagerMixin {
                 }
                 return remainders;
             }
-        };
-        sortedMap.put(identifier, recipe);
+        });
+
+    @Unique
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static void csl$tryShadow(RecipeType<?> type, RecipeInput input, Level level, CallbackInfoReturnable cir) {
+        if (type != RecipeType.CRAFTING || !CarpetShadowLegacySettings.shadowCraftingGeneration) return;
+        if (input instanceof CraftingInput craftingInput && CSL_SHADOW_RECIPE.value().matches(craftingInput, level))
+            cir.setReturnValue(Optional.of(CSL_SHADOW_RECIPE));
+    }
+
+    @Inject(method = "getRecipeFor(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Ljava/util/Optional;", at = @At("HEAD"), cancellable = true)
+    private void csl$lookup(RecipeType<?> type, RecipeInput input, Level level, CallbackInfoReturnable<Optional<?>> cir) {
+        csl$tryShadow(type, input, level, cir);
+    }
+
+    @Inject(method = "getRecipeFor(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;Lnet/minecraft/resources/ResourceKey;)Ljava/util/Optional;", at = @At("HEAD"), cancellable = true)
+    private void csl$lookupKey(RecipeType<?> type, RecipeInput input, Level level, ResourceKey<?> hint, CallbackInfoReturnable<Optional<?>> cir) {
+        csl$tryShadow(type, input, level, cir);
+    }
+
+    @Inject(method = "getRecipeFor(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/crafting/RecipeHolder;)Ljava/util/Optional;", at = @At("HEAD"), cancellable = true)
+    private void csl$lookupHolder(RecipeType<?> type, RecipeInput input, Level level, RecipeHolder<?> hint, CallbackInfoReturnable<Optional<?>> cir) {
+        csl$tryShadow(type, input, level, cir);
     }
 }

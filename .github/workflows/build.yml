@@ -22,6 +22,18 @@ jobs:
           chmod +x gradlew
           set -o pipefail
           ./gradlew build --stacktrace 2>&1 | tee build.log
+      - name: Server smoke test
+        if: steps.build.outcome == 'success'
+        run: |
+          mkdir -p run && echo "eula=true" > run/eula.txt
+          printf 'online-mode=false\nlevel-type=minecraft\\:flat\nspawn-protection=0\n' > run/server.properties
+          (timeout 600 ./gradlew runServer > server.log 2>&1 &)
+          for i in $(seq 1 120); do
+            sleep 5
+            if grep -q -E 'Done \(|Exception in server tick loop|Crash report|Mixin apply.*failed' server.log; then break; fi
+          done
+          sleep 5; pkill -f runServer || true; pkill -f KnotServer || true
+          grep -E 'Done \(' server.log && echo SERVER_OK || echo SERVER_FAILED
       - name: Inspect 26.3 API (signatures only)
         run: |
           JAR=$(find ~/.gradle/caches -name "minecraft-*26.3*.jar" ! -name "*sources*" | grep -E "merged|common|minecraft-26" | head -1)
@@ -31,7 +43,7 @@ jobs:
           done
       - name: Publish log to ci-logs branch
         run: |
-          mkdir /tmp/out && cp build.log api.txt /tmp/out/
+          mkdir /tmp/out && cp build.log api.txt /tmp/out/ && (cp server.log /tmp/out/ || true)
           echo "${{ steps.build.outcome }} run ${{ github.run_number }} ${{ github.sha }}" > /tmp/out/status.txt
           cd /tmp/out && git init -q -b ci-logs && git add -A
           git -c user.name=ci -c user.email=ci@localhost commit -q -m "logs run ${{ github.run_number }}"
