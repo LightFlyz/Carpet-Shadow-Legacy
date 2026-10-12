@@ -41,8 +41,46 @@ public final class SuppressionSelfTest {
         }
     }
 
+    public static void realChestTest(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        boolean prevGen = CarpetShadowLegacySettings.shadowSuppressionGeneration, prevClassic = CarpetShadowLegacySettings.classicUpdateSuppression;
+        int prevDepth = CarpetShadowLegacySettings.classicUpdateSuppressionDepth;
+        try {
+            BlockPos chestPos = new BlockPos(20, 200, 20);
+            BlockPos compPos = chestPos.west();
+            level.setBlock(chestPos.below(), Blocks.STONE.defaultBlockState(), 2);
+            level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 2);
+            level.setBlock(compPos.below(), Blocks.AIR.defaultBlockState(), 2);
+            level.setBlock(compPos, Blocks.COMPARATOR.defaultBlockState().setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING, net.minecraft.core.Direction.EAST), 2);
+            CarpetShadowLegacy.LOGGER.info("CSL_CHESTTEST comparator placed={} canSurvive={}", level.getBlockState(compPos).is(Blocks.COMPARATOR), level.getBlockState(compPos).canSurvive(level, compPos));
+            net.minecraft.world.level.block.entity.ChestBlockEntity chest = (net.minecraft.world.level.block.entity.ChestBlockEntity) level.getBlockEntity(chestPos);
+            net.fabricmc.fabric.api.entity.FakePlayer player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+            net.minecraft.world.inventory.ChestMenu menu = new net.minecraft.world.inventory.ChestMenu(net.minecraft.world.inventory.MenuType.GENERIC_9x3, 2, player.getInventory(), chest, 3);
+            net.minecraft.world.item.ItemStack stick = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.STICK, 3);
+            player.getInventory().setItem(1, stick);
+            CarpetShadowLegacySettings.shadowSuppressionGeneration = true;
+            CarpetShadowLegacySettings.classicUpdateSuppression = true;
+            CarpetShadowLegacySettings.classicUpdateSuppressionDepth = 1;
+            try {
+                menu.clicked(0, 1, net.minecraft.world.inventory.ContainerInput.SWAP, player);
+                CarpetShadowLegacy.LOGGER.info("CSL_CHESTTEST click returned normally");
+            } catch (Throwable t) {
+                CarpetShadowLegacy.LOGGER.info("CSL_CHESTTEST click threw {}", t.toString());
+            }
+            net.minecraft.world.item.ItemStack inChest = chest.getItem(0), inHotbar = player.getInventory().getItem(1);
+            CarpetShadowLegacy.LOGGER.info("CSL_CHESTTEST comparatorStillThere={} chest={} hotbar={} sameStack={}", level.getBlockState(compPos).is(Blocks.COMPARATOR), inChest, inHotbar, inChest == inHotbar);
+        } catch (Throwable t) {
+            CarpetShadowLegacy.LOGGER.info("CSL_CHESTTEST setup failed", t);
+        } finally {
+            CarpetShadowLegacySettings.shadowSuppressionGeneration = prevGen;
+            CarpetShadowLegacySettings.classicUpdateSuppression = prevClassic;
+            CarpetShadowLegacySettings.classicUpdateSuppressionDepth = prevDepth;
+        }
+    }
+
     public static void run(MinecraftServer server) {
         shadowTest(server);
+        realChestTest(server);
         ServerLevel level = server.overworld();
         for (boolean classic : new boolean[]{false, true}) {
             CarpetShadowLegacySettings.classicUpdateSuppression = classic;
