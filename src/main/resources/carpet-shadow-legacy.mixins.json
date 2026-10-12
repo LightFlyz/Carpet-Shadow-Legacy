@@ -34,7 +34,8 @@
     "suppression.CollectingNeighborUpdaterMixin",
     "suppression.MinecraftServerMixin",
     "suppression.DebugLevelMixin",
-    "suppression.DebugDiodeMixin"
+    "suppression.DebugDiodeMixin",
+    "suppression.ComparatorBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

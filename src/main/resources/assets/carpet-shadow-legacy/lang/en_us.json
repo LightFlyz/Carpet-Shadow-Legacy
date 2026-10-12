@@ -32,5 +32,7 @@
   "carpet.rule.classicUpdateSuppressionDepth.desc": "Max recursion depth of classic update chains before they suppress (0 = only on a real stack overflow)",
   "carpet.rule.classicUpdateSuppressionDepth.extra.0": "Check the log for 'Classic update chain finished, max depth N' and set this below N",
   "carpet.rule.shadowDebugLog.name": "shadowDebugLog",
-  "carpet.rule.shadowDebugLog.desc": "Log every inventory click and whether a suppression happened during it"
+  "carpet.rule.shadowDebugLog.desc": "Log every inventory click and whether a suppression happened during it",
+  "carpet.rule.legacyComparatorSupport.name": "legacyComparatorSupport",
+  "carpet.rule.legacyComparatorSupport.desc": "Comparators only check their support on neighbour updates, like 1.20.1 (re-enables trapdoor floating comparators)"
 }

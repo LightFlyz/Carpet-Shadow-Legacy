@@ -99,6 +99,7 @@ public final class SuppressionSelfTest {
             net.fabricmc.fabric.api.entity.FakePlayer player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
             CarpetShadowLegacySettings.classicUpdateSuppression = true;
             CarpetShadowLegacySettings.shadowDebugLog = true;
+            CarpetShadowLegacySettings.legacyComparatorSupport = true;
             BlockState trap = level.getBlockState(trapPos);
             net.minecraft.world.phys.BlockHitResult hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(trapPos), net.minecraft.core.Direction.NORTH, trapPos, false);
             net.minecraft.world.InteractionResult r = trap.useWithoutItem(level, player, hit);
@@ -120,6 +121,7 @@ public final class SuppressionSelfTest {
             CarpetShadowLegacySettings.classicUpdateSuppression = prevClassic;
             CarpetShadowLegacySettings.classicUpdateSuppressionDepth = prevDepth;
             CarpetShadowLegacySettings.shadowDebugLog = false;
+            CarpetShadowLegacySettings.legacyComparatorSupport = false;
         }
     }
 
