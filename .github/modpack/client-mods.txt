@@ -8,7 +8,7 @@ Model Gap Fix|model-gap-fix
 Sodium Extra|sodium-extra
 Puzzle|puzzle
 Continuity|continuity
-FabricSkyBoxes|fabricskyboxes
+FabricSkyBoxes (Nuit)|nuit|fabricskyboxes
 AdvancementInfo|advancementinfo
 Enhanced Block Entities|ebe
 MoreChatHistory|morechathistory
@@ -34,7 +34,7 @@ Animatica|animatica
 FerriteCore|ferrite-core
 Fabrishot|fabrishot
 Sodium|sodium
-FabricSkyBoxes Interop|fabricskyboxes-interop
+Nuit Interop|nuit-interop|fabricskyboxes-interop
 Entity Texture Features|entitytexturefeatures
 Mod Menu|modmenu
 Iris|iris
