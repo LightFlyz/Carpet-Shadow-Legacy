@@ -31,7 +31,7 @@
     "tooltip.ItemStackMixin",
     "tooltip.ScreenHandlerMixin",
     "tooltip.ScreenHandlerSlotUpdateS2CPacketMixin",
-    "suppression.LevelMixin",
+    "suppression.CollectingNeighborUpdaterMixin",
     "suppression.MinecraftServerMixin"
   ],
   "injectors": {
