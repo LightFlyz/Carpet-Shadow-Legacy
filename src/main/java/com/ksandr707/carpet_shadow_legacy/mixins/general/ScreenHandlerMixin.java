@@ -15,6 +15,7 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import com.ksandr707.carpet_shadow_legacy.utility.UpdateDepth;
 import net.minecraft.world.entity.player.Inventory;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -44,11 +45,14 @@ public abstract class ScreenHandlerMixin {
                     slotIndex >= 0 && slotIndex < instance.slots.size() ? instance.getSlot(slotIndex).getItem() : "-",
                     button >= 0 && button < player.getInventory().getContainerSize() ? player.getInventory().getItem(button) : "-",
                     instance.getCarried(), player.hasInfiniteMaterials());
+        UpdateDepth.IN_CLICK.set(true);
         try {
             original.call(instance, slotIndex, button, actionType, player);
             if (CarpetShadowLegacySettings.shadowDebugLog)
                 CarpetShadowLegacy.LOGGER.info("[shadowDebug] click finished normally (no suppression during the click)");
+            UpdateDepth.IN_CLICK.set(false);
         } catch (Throwable error) {
+            UpdateDepth.IN_CLICK.set(false);
             if (CarpetShadowLegacySettings.shadowDebugLog)
                 CarpetShadowLegacy.LOGGER.info("[shadowDebug] suppression during click: {}", error.toString());
             if (actionType != ContainerInput.SWAP && actionType != ContainerInput.PICKUP && actionType != ContainerInput.QUICK_CRAFT)

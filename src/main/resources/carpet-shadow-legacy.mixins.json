@@ -32,7 +32,9 @@
     "tooltip.ScreenHandlerMixin",
     "tooltip.ScreenHandlerSlotUpdateS2CPacketMixin",
     "suppression.CollectingNeighborUpdaterMixin",
-    "suppression.MinecraftServerMixin"
+    "suppression.MinecraftServerMixin",
+    "suppression.DebugLevelMixin",
+    "suppression.DebugDiodeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

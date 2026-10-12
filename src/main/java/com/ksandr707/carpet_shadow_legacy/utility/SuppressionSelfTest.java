@@ -61,6 +61,7 @@ public final class SuppressionSelfTest {
             CarpetShadowLegacySettings.shadowSuppressionGeneration = true;
             CarpetShadowLegacySettings.classicUpdateSuppression = true;
             CarpetShadowLegacySettings.classicUpdateSuppressionDepth = 1;
+            CarpetShadowLegacySettings.shadowDebugLog = true;
             try {
                 menu.clicked(0, 1, net.minecraft.world.inventory.ContainerInput.SWAP, player);
                 CarpetShadowLegacy.LOGGER.info("CSL_CHESTTEST click returned normally");
@@ -75,6 +76,7 @@ public final class SuppressionSelfTest {
             CarpetShadowLegacySettings.shadowSuppressionGeneration = prevGen;
             CarpetShadowLegacySettings.classicUpdateSuppression = prevClassic;
             CarpetShadowLegacySettings.classicUpdateSuppressionDepth = prevDepth;
+            CarpetShadowLegacySettings.shadowDebugLog = false;
         }
     }
 

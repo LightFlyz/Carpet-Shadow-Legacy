@@ -5,6 +5,7 @@ import com.ksandr707.carpet_shadow_legacy.CarpetShadowLegacySettings;
 
 /** Tracks classic (recursive) neighbor-update depth on the current thread. [current, max] */
 public final class UpdateDepth {
+    public static final ThreadLocal<Boolean> IN_CLICK = ThreadLocal.withInitial(() -> false);
     public static final ThreadLocal<int[]> DEPTH = ThreadLocal.withInitial(() -> new int[2]);
 
     public static void enter() {
@@ -27,6 +28,6 @@ public final class UpdateDepth {
     }
 
     private static void report(int max) {
-        if (max >= 32) CarpetShadowLegacy.LOGGER.info("Classic update chain finished, max depth {}", max);
+        if (max >= 32 || (CarpetShadowLegacySettings.shadowDebugLog && IN_CLICK.get())) CarpetShadowLegacy.LOGGER.info("Classic update chain finished, max depth {}", max);
     }
 }
