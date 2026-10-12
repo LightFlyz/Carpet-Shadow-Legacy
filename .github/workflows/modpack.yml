@@ -1,0 +1,28 @@
+name: modpack
+on:
+  push:
+    branches: ['modpack']
+permissions:
+  contents: write
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve 26.3 mods from Modrinth
+        run: OUT=pack python3 .github/modpack/resolve.py
+      - name: Add Carpet Shadow Legacy (classic) build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG=$(gh release list --limit 50 --json tagName --jq '[.[] | select(.tagName | startswith("26.3-build-"))] | sort_by(.tagName | ltrimstr("26.3-build-") | tonumber) | last | .tagName')
+          gh release download "$TAG" --pattern "*.jar" --dir pack
+          echo "OK   Carpet Shadow Legacy     (our build $TAG)" >> modpack-report.txt
+      - name: Zip and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp modpack-report.txt pack/
+          (cd pack && zip -q ../server-mods-26.3.zip *)
+          gh release delete server-mods-26.3 --yes --cleanup-tag 2>/dev/null || true
+          gh release create server-mods-26.3 server-mods-26.3.zip modpack-report.txt --target "${{ github.sha }}" --title "Server mods for 26.3" --notes-file modpack-report.txt --prerelease
