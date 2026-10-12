@@ -9,6 +9,7 @@ import com.ksandr707.carpet_shadow_legacy.component.ShadowNBTData;
 import com.ksandr707.carpet_shadow_legacy.utility.RandomString;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +43,13 @@ public class CarpetShadowLegacy implements CarpetExtension, ModInitializer {
     public void onInitialize() {
         CarpetServer.manageExtension(new CarpetShadowLegacy());
         new ShadowNBTData();
+        if (Boolean.getBoolean("csl.mixinAudit")) {
+            // Dev/CI only: force every mixin target to load so broken patches fail fast.
+            ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+                org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit();
+                LOGGER.info("CSL_MIXIN_AUDIT_DONE");
+            });
+        }
             ServerLevelEvents.LOAD.register((server, world) -> {
                 for (Player player : world.players()) {
                     Globals.updateInventory(player.getInventory());

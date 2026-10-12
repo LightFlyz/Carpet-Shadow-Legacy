@@ -146,3 +146,10 @@ tasks.register("FinalizeBuild", Copy) {
 tasks.compileJava.finalizedBy updateBuildNumber
 tasks.updateBuildNumber.shouldRunAfter compileJava
 tasks.build.finalizedBy FinalizeBuild
+loom {
+    runs {
+        server {
+            vmArg "-Dcsl.mixinAudit=true"
+        }
+    }
+}
