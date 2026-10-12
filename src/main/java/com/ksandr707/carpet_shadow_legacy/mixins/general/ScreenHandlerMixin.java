@@ -14,6 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import net.minecraft.world.entity.player.Inventory;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
@@ -85,30 +87,44 @@ public abstract class ScreenHandlerMixin {
         }
     }
 
-    @Inject(
+    @Unique
+    private static final ThreadLocal<Object[]> CSL_DEFERRED_CLEAR = new ThreadLocal<>();
+
+    /**
+     * 26.3 clears the hotbar slot BEFORE placing the item into the container, so a suppressor
+     * firing on the container update can no longer leave the stack in both places.
+     * Restore the pre-1.19 order: defer the hotbar clear until after the container accepted it.
+     */
+    @WrapOperation(
             method = "doClick",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/inventory/Slot;setByPlayer(Lnet/minecraft/world/item/ItemStack;)V",
-                    shift = At.Shift.BEFORE
-            ),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;setItem(ILnet/minecraft/world/item/ItemStack;)V", ordinal = 1),
             slice = @Slice(
-                    from = @At(
-                            value = "FIELD",
-                            target = "Lnet/minecraft/world/inventory/ContainerInput;SWAP:Lnet/minecraft/world/inventory/ContainerInput;",
-                            opcode = Opcodes.GETSTATIC
-                    ),
-                    to = @At(
-                            value = "FIELD",
-                            target = "Lnet/minecraft/world/inventory/ContainerInput;CLONE:Lnet/minecraft/world/inventory/ContainerInput;",
-                            opcode = Opcodes.GETSTATIC
-                    )
+                    from = @At(value = "FIELD", target = "Lnet/minecraft/world/inventory/ContainerInput;SWAP:Lnet/minecraft/world/inventory/ContainerInput;", opcode = Opcodes.GETSTATIC),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/world/inventory/ContainerInput;CLONE:Lnet/minecraft/world/inventory/ContainerInput;", opcode = Opcodes.GETSTATIC)
             )
     )
-    private void reintroduceSuppressionShadowing2(int slotIndex, int buttonNum, ContainerInput containerInput, Player player, CallbackInfo ci) {
-        if (CarpetShadowLegacySettings.shadowSuppressionGeneration) {
-            Slot slot = this.getSlot(slotIndex);
-            slot.setChanged();
+    private void csl$deferHotbarClear(Inventory inventory, int index, ItemStack stack, Operation<Void> original) {
+        if (CarpetShadowLegacySettings.shadowSuppressionGeneration && stack.isEmpty()) {
+            CSL_DEFERRED_CLEAR.set(new Object[]{inventory, index, original});
+            return;
         }
+        original.call(inventory, index, stack);
+    }
+
+    @WrapOperation(
+            method = "doClick",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/Slot;setByPlayer(Lnet/minecraft/world/item/ItemStack;)V", ordinal = 2),
+            slice = @Slice(
+                    from = @At(value = "FIELD", target = "Lnet/minecraft/world/inventory/ContainerInput;SWAP:Lnet/minecraft/world/inventory/ContainerInput;", opcode = Opcodes.GETSTATIC),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/world/inventory/ContainerInput;CLONE:Lnet/minecraft/world/inventory/ContainerInput;", opcode = Opcodes.GETSTATIC)
+            )
+    )
+    @SuppressWarnings("unchecked")
+    private void csl$placeThenClear(Slot target, ItemStack source, Operation<Void> original) {
+        Object[] deferred = CSL_DEFERRED_CLEAR.get();
+        CSL_DEFERRED_CLEAR.remove();
+        original.call(target, source); // a suppressor throwing here leaves the stack in the hotbar too
+        if (deferred != null)
+            ((Operation<Void>) deferred[2]).call(deferred[0], deferred[1], ItemStack.EMPTY);
     }
 }

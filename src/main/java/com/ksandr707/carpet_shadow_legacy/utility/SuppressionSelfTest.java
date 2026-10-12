@@ -9,7 +9,40 @@ import net.minecraft.world.level.block.Blocks;
 
 /** CI-only diagnostic: toggles a powered-rail line and reports neighbor-update recursion depth. */
 public final class SuppressionSelfTest {
+    public static void shadowTest(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        boolean prev = CarpetShadowLegacySettings.shadowSuppressionGeneration;
+        CarpetShadowLegacySettings.shadowSuppressionGeneration = true;
+        try {
+            net.fabricmc.fabric.api.entity.FakePlayer player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+            net.minecraft.world.SimpleContainer box = new net.minecraft.world.SimpleContainer(9) {
+                boolean armed = true;
+                @Override public void setChanged() {
+                    if (armed && !getItem(0).isEmpty()) { armed = false; throw new StackOverflowError("simulated suppressor"); }
+                    super.setChanged();
+                }
+            };
+            net.minecraft.world.inventory.ChestMenu menu = net.minecraft.world.inventory.ChestMenu.oneRow(1, player.getInventory(), box);
+            net.minecraft.world.item.ItemStack diamonds = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 5);
+            player.getInventory().setItem(0, diamonds);
+            try {
+                menu.clicked(0, 0, net.minecraft.world.inventory.ContainerInput.SWAP, player);
+            } catch (Throwable t) {
+                CarpetShadowLegacy.LOGGER.info("CSL_SHADOWTEST click threw {}", t.toString());
+            }
+            net.minecraft.world.item.ItemStack inBox = box.getItem(0), inHotbar = player.getInventory().getItem(0);
+            CarpetShadowLegacy.LOGGER.info("CSL_SHADOWTEST box={} hotbar={} sameStack={} shadowId={}", inBox, inHotbar, inBox == inHotbar,
+                    ((com.ksandr707.carpet_shadow_legacy.interfaces.ShadowItem) (Object) inBox).getShadowId());
+            player.getInventory().setItem(0, net.minecraft.world.item.ItemStack.EMPTY);
+        } catch (Throwable t) {
+            CarpetShadowLegacy.LOGGER.info("CSL_SHADOWTEST setup failed", t);
+        } finally {
+            CarpetShadowLegacySettings.shadowSuppressionGeneration = prev;
+        }
+    }
+
     public static void run(MinecraftServer server) {
+        shadowTest(server);
         ServerLevel level = server.overworld();
         for (boolean classic : new boolean[]{false, true}) {
             CarpetShadowLegacySettings.classicUpdateSuppression = classic;
