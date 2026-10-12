@@ -34,6 +34,15 @@ public abstract class CollectingNeighborUpdaterMixin {
     @Unique private InstantNeighborUpdater csl$instant;
 
     @Unique
+    private void csl$trace(String what, BlockPos pos) {
+        if (!CarpetShadowLegacySettings.shadowDebugLog) return;
+        int depth = UpdateDepth.DEPTH.get()[0];
+        if (depth <= 3)
+            com.ksandr707.carpet_shadow_legacy.CarpetShadowLegacy.LOGGER.info("[shadowDebug] {}{} at {} -> {}", "  ".repeat(Math.max(0, depth - 1)), what, pos.toShortString(),
+                    this.level.getBlockState(pos).getBlock().getDescriptionId());
+    }
+
+    @Unique
     private InstantNeighborUpdater csl$instant() {
         if (csl$instant == null) csl$instant = new InstantNeighborUpdater(this.level);
         return csl$instant;
@@ -54,6 +63,7 @@ public abstract class CollectingNeighborUpdaterMixin {
         if (!CarpetShadowLegacySettings.classicUpdateSuppression) return;
         UpdateDepth.enter();
         try {
+            csl$trace("update", pos);
             csl$instant().neighborChanged(pos, block, orientation);
         } finally { UpdateDepth.exit(); }
         ci.cancel();
@@ -64,6 +74,7 @@ public abstract class CollectingNeighborUpdaterMixin {
         if (!CarpetShadowLegacySettings.classicUpdateSuppression) return;
         UpdateDepth.enter();
         try {
+            csl$trace("update", pos);
             csl$instant().neighborChanged(state, pos, block, orientation, movedByPiston);
         } finally { UpdateDepth.exit(); }
         ci.cancel();
@@ -74,6 +85,7 @@ public abstract class CollectingNeighborUpdaterMixin {
         if (!CarpetShadowLegacySettings.classicUpdateSuppression) return;
         UpdateDepth.enter();
         try {
+            csl$trace("neighbours of", pos);
             csl$instant().updateNeighborsAtExceptFromFacing(pos, block, skip, orientation);
         } finally { UpdateDepth.exit(); }
         ci.cancel();

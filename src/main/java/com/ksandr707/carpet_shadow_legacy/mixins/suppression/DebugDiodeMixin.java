@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class DebugDiodeMixin {
     @Inject(method = "neighborChanged", at = @At("HEAD"))
     private void csl$debugDiode(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean movedByPiston, CallbackInfo ci) {
-        if (!CarpetShadowLegacySettings.shadowDebugLog || !UpdateDepth.IN_CLICK.get()) return;
+        if (!CarpetShadowLegacySettings.shadowDebugLog) return;
         CarpetShadowLegacy.LOGGER.info("[shadowDebug] {} at {} got updated: canSurvive={} (breaks={})", state.getBlock().getDescriptionId(), pos.toShortString(),
                 state.canSurvive(level, pos), !state.canSurvive(level, pos));
     }
