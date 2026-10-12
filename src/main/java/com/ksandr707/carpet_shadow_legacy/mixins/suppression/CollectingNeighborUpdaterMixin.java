@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.redstone.CollectingNeighborUpdater;
 import net.minecraft.world.level.redstone.InstantNeighborUpdater;
 import net.minecraft.world.level.redstone.Orientation;
+import com.ksandr707.carpet_shadow_legacy.utility.UpdateDepth;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,6 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(CollectingNeighborUpdater.class)
 public abstract class CollectingNeighborUpdaterMixin {
 
+
+
     @Shadow @Final private Level level;
 
     @Unique private InstantNeighborUpdater csl$instant;
@@ -39,28 +42,40 @@ public abstract class CollectingNeighborUpdaterMixin {
     @Inject(method = "shapeUpdate", at = @At("HEAD"), cancellable = true)
     private void csl$shapeUpdate(Direction direction, BlockState state, BlockPos pos, BlockPos neighborPos, int flags, int maxDepth, CallbackInfo ci) {
         if (!CarpetShadowLegacySettings.classicUpdateSuppression) return;
-        csl$instant().shapeUpdate(direction, state, pos, neighborPos, flags, maxDepth);
+        UpdateDepth.enter();
+        try {
+            csl$instant().shapeUpdate(direction, state, pos, neighborPos, flags, maxDepth);
+        } finally { UpdateDepth.exit(); }
         ci.cancel();
     }
 
     @Inject(method = "neighborChanged(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/level/redstone/Orientation;)V", at = @At("HEAD"), cancellable = true)
     private void csl$neighborChanged(BlockPos pos, Block block, @Nullable Orientation orientation, CallbackInfo ci) {
         if (!CarpetShadowLegacySettings.classicUpdateSuppression) return;
-        csl$instant().neighborChanged(pos, block, orientation);
+        UpdateDepth.enter();
+        try {
+            csl$instant().neighborChanged(pos, block, orientation);
+        } finally { UpdateDepth.exit(); }
         ci.cancel();
     }
 
     @Inject(method = "neighborChanged(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/level/redstone/Orientation;Z)V", at = @At("HEAD"), cancellable = true)
     private void csl$neighborChangedState(BlockState state, BlockPos pos, Block block, @Nullable Orientation orientation, boolean movedByPiston, CallbackInfo ci) {
         if (!CarpetShadowLegacySettings.classicUpdateSuppression) return;
-        csl$instant().neighborChanged(state, pos, block, orientation, movedByPiston);
+        UpdateDepth.enter();
+        try {
+            csl$instant().neighborChanged(state, pos, block, orientation, movedByPiston);
+        } finally { UpdateDepth.exit(); }
         ci.cancel();
     }
 
     @Inject(method = "updateNeighborsAtExceptFromFacing", at = @At("HEAD"), cancellable = true, require = 0)
     private void csl$updateNeighbors(BlockPos pos, Block block, @Nullable Direction skip, @Nullable Orientation orientation, CallbackInfo ci) {
         if (!CarpetShadowLegacySettings.classicUpdateSuppression) return;
-        csl$instant().updateNeighborsAtExceptFromFacing(pos, block, skip, orientation);
+        UpdateDepth.enter();
+        try {
+            csl$instant().updateNeighborsAtExceptFromFacing(pos, block, skip, orientation);
+        } finally { UpdateDepth.exit(); }
         ci.cancel();
     }
 }

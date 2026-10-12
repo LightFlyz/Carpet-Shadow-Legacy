@@ -47,6 +47,7 @@ public class CarpetShadowLegacy implements CarpetExtension, ModInitializer {
             // Dev/CI only: force every mixin target to load so broken patches fail fast.
             ServerLifecycleEvents.SERVER_STARTED.register(server -> {
                 org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit();
+                com.ksandr707.carpet_shadow_legacy.utility.SuppressionSelfTest.run(server);
                 LOGGER.info("CSL_MIXIN_AUDIT_DONE");
             });
         }
