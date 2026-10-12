@@ -1,7 +1,10 @@
 name: build
 on:
   push:
+    branches: ['26.3']
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,17 +16,33 @@ jobs:
           java-version: 25
       - uses: gradle/actions/setup-gradle@v4
       - name: Build
-        run: chmod +x gradlew && ./gradlew build --stacktrace
-      - name: Inspect 26.3 API (signatures only)
-        if: always()
+        id: build
+        continue-on-error: true
         run: |
-          JAR=$(find ~/.gradle/caches -name "minecraft-merged*26.3*.jar" -o -name "minecraft-common*26.3*.jar" | grep -v sources | head -1)
-          echo "jar: $JAR"
-          for c in net.minecraft.world.item.crafting.RecipeManager net.minecraft.world.level.redstone.InstantNeighborUpdater net.minecraft.world.inventory.CraftingMenu net.minecraft.world.item.crafting.CustomRecipe; do
-            javap -p -cp "$JAR" $c || true
+          chmod +x gradlew
+          set -o pipefail
+          ./gradlew build --stacktrace 2>&1 | tee build.log
+      - name: Inspect 26.3 API (signatures only)
+        run: |
+          JAR=$(find ~/.gradle/caches -name "minecraft-*26.3*.jar" ! -name "*sources*" | grep -E "merged|common|minecraft-26" | head -1)
+          echo "jar: $JAR" > api.txt
+          for c in $(cat .github/api-classes.txt 2>/dev/null); do
+            javap -p -cp "$JAR" "$c" >> api.txt 2>&1 || true
           done
-      - uses: actions/upload-artifact@v4
-        with:
-          name: carpet-shadow-legacy-26.3
-          path: build/libs/*.jar
-          if-no-files-found: ignore
+      - name: Publish log to ci-logs branch
+        run: |
+          mkdir /tmp/out && cp build.log api.txt /tmp/out/
+          echo "${{ steps.build.outcome }} run ${{ github.run_number }} ${{ github.sha }}" > /tmp/out/status.txt
+          cd /tmp/out && git init -q -b ci-logs && git add -A
+          git -c user.name=ci -c user.email=ci@localhost commit -q -m "logs run ${{ github.run_number }}"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" ci-logs
+      - name: Release jar
+        if: steps.build.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          J=$(ls build/libs/*.jar | grep -v sources | head -1)
+          gh release create "26.3-build-${{ github.run_number }}" "$J" --target "${{ github.sha }}" --title "26.3 build ${{ github.run_number }}" --notes "Automated build" --prerelease
+      - name: Fail if build failed
+        if: steps.build.outcome != 'success'
+        run: exit 1

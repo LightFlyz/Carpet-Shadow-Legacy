@@ -1,0 +1,5 @@
+net.minecraft.world.item.crafting.RecipeManager
+net.minecraft.world.level.redstone.InstantNeighborUpdater
+net.minecraft.world.level.redstone.NeighborUpdater
+net.minecraft.world.inventory.CraftingMenu
+net.minecraft.world.item.crafting.CustomRecipe
