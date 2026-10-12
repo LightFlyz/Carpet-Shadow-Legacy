@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 /** CI-only diagnostic: toggles a powered-rail line and reports neighbor-update recursion depth. */
 public final class SuppressionSelfTest {
@@ -80,9 +81,52 @@ public final class SuppressionSelfTest {
         }
     }
 
+    public static void trapdoorTest(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        boolean prevGen = CarpetShadowLegacySettings.shadowSuppressionGeneration, prevClassic = CarpetShadowLegacySettings.classicUpdateSuppression;
+        int prevDepth = CarpetShadowLegacySettings.classicUpdateSuppressionDepth;
+        try {
+            BlockPos hopperPos = new BlockPos(40, 200, 40);
+            BlockPos compPos = hopperPos.west();
+            BlockPos trapPos = compPos.below();
+            level.setBlock(hopperPos.below(), Blocks.STONE.defaultBlockState(), 3);
+            level.setBlock(hopperPos, Blocks.HOPPER.defaultBlockState(), 3);
+            level.setBlock(trapPos, Blocks.OAK_TRAPDOOR.defaultBlockState()
+                    .setValue(net.minecraft.world.level.block.TrapDoorBlock.HALF, net.minecraft.world.level.block.state.properties.Half.TOP)
+                    .setValue(net.minecraft.world.level.block.TrapDoorBlock.FACING, net.minecraft.core.Direction.NORTH), 3);
+            level.setBlock(compPos, Blocks.COMPARATOR.defaultBlockState().setValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING, net.minecraft.core.Direction.EAST), 3);
+            CarpetShadowLegacy.LOGGER.info("CSL_TRAPTEST placed comparator={} canSurvive={}", level.getBlockState(compPos).is(Blocks.COMPARATOR), level.getBlockState(compPos).canSurvive(level, compPos));
+            net.fabricmc.fabric.api.entity.FakePlayer player = net.fabricmc.fabric.api.entity.FakePlayer.get(level);
+            CarpetShadowLegacySettings.classicUpdateSuppression = true;
+            CarpetShadowLegacySettings.shadowDebugLog = true;
+            BlockState trap = level.getBlockState(trapPos);
+            net.minecraft.world.phys.BlockHitResult hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(trapPos), net.minecraft.core.Direction.NORTH, trapPos, false);
+            net.minecraft.world.InteractionResult r = trap.useWithoutItem(level, player, hit);
+            CarpetShadowLegacy.LOGGER.info("CSL_TRAPTEST opened trapdoor result={} open={} comparatorStillThere={} canSurvive={}", r, level.getBlockState(trapPos).getValue(net.minecraft.world.level.block.TrapDoorBlock.OPEN),
+                    level.getBlockState(compPos).is(Blocks.COMPARATOR), level.getBlockState(compPos).canSurvive(level, compPos));
+            net.minecraft.world.level.block.entity.HopperBlockEntity hopper = (net.minecraft.world.level.block.entity.HopperBlockEntity) level.getBlockEntity(hopperPos);
+            net.minecraft.world.inventory.HopperMenu menu = new net.minecraft.world.inventory.HopperMenu(3, player.getInventory(), hopper);
+            player.getInventory().setItem(2, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.OAK_PLANKS, 7));
+            CarpetShadowLegacySettings.shadowSuppressionGeneration = true;
+            CarpetShadowLegacySettings.classicUpdateSuppressionDepth = 1;
+            try { menu.clicked(0, 2, net.minecraft.world.inventory.ContainerInput.SWAP, player); }
+            catch (Throwable t) { CarpetShadowLegacy.LOGGER.info("CSL_TRAPTEST click threw {}", t.toString()); }
+            CarpetShadowLegacy.LOGGER.info("CSL_TRAPTEST after click: comparatorStillThere={} hopper={} hotbar={} sameStack={}", level.getBlockState(compPos).is(Blocks.COMPARATOR),
+                    hopper.getItem(0), player.getInventory().getItem(2), hopper.getItem(0) == player.getInventory().getItem(2));
+        } catch (Throwable t) {
+            CarpetShadowLegacy.LOGGER.info("CSL_TRAPTEST setup failed", t);
+        } finally {
+            CarpetShadowLegacySettings.shadowSuppressionGeneration = prevGen;
+            CarpetShadowLegacySettings.classicUpdateSuppression = prevClassic;
+            CarpetShadowLegacySettings.classicUpdateSuppressionDepth = prevDepth;
+            CarpetShadowLegacySettings.shadowDebugLog = false;
+        }
+    }
+
     public static void run(MinecraftServer server) {
         shadowTest(server);
         realChestTest(server);
+        trapdoorTest(server);
         ServerLevel level = server.overworld();
         for (boolean classic : new boolean[]{false, true}) {
             CarpetShadowLegacySettings.classicUpdateSuppression = classic;
