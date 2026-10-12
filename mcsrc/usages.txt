@@ -1,0 +1,25 @@
+/tmp/all/net/minecraft/client/Minecraft.java:694:		if (InputQuirks.EMULATE_RIGHT_CLICK_WITH_CTRL_KEY) {
+/tmp/all/net/minecraft/client/input/InputWithModifiers.java:65:	default boolean hasControlDownWithQuirk() {
+/tmp/all/net/minecraft/client/input/InputWithModifiers.java:70:		return this.shortcutKey() == 97 && this.hasControlDownWithQuirk() && !this.hasShiftDown() && !this.hasAltDown();
+/tmp/all/net/minecraft/client/input/InputWithModifiers.java:74:		return this.shortcutKey() == 99 && this.hasControlDownWithQuirk() && !this.hasShiftDown() && !this.hasAltDown();
+/tmp/all/net/minecraft/client/input/InputWithModifiers.java:78:		return this.shortcutKey() == 118 && this.hasControlDownWithQuirk() && !this.hasShiftDown() && !this.hasAltDown();
+/tmp/all/net/minecraft/client/input/InputWithModifiers.java:82:		return this.shortcutKey() == 120 && this.hasControlDownWithQuirk() && !this.hasShiftDown() && !this.hasAltDown();
+/tmp/all/net/minecraft/client/input/InputQuirks.java:18:	public static final boolean EMULATE_RIGHT_CLICK_WITH_CTRL_KEY = ON_OSX;
+/tmp/all/net/minecraft/client/KeyboardHandler.java:474:				|| !this.minecraft.handleGlobalKeyPress(InputConstants.getKey(event), event.hasControlDownWithQuirk())) {
+/tmp/all/net/minecraft/client/KeyboardHandler.java:478:						if (event.hasControlDownWithQuirk() && event.shortcutKey() == 98 && this.minecraft.getNarrator().isActive() && options.narratorHotkey().get()) {
+/tmp/all/net/minecraft/client/MouseHandler.java:83:				if (pressed && this.minecraft.handleGlobalKeyPress(InputConstants.Type.MOUSE.getOrCreate(rawButtonInfo.button()), rawButtonInfo.hasControlDownWithQuirk())) {
+/tmp/all/net/minecraft/client/gui/components/MultilineTextField.java:217:				if (event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/MultilineTextField.java:230:				if (event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/MultilineTextField.java:239:				if (event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/MultilineTextField.java:250:				if (event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/MultilineTextField.java:261:				if (event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/MultilineTextField.java:270:				if (event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/MultilineTextField.java:279:				if (!event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/MultilineTextField.java:285:				if (!event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/tabs/TabNavigationBar.java:188:		if (event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/EditBox.java:278:						this.deleteText(-1, event.hasControlDownWithQuirk());
+/tmp/all/net/minecraft/client/gui/components/EditBox.java:284:						this.deleteText(1, event.hasControlDownWithQuirk());
+/tmp/all/net/minecraft/client/gui/components/EditBox.java:295:					if (event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/components/EditBox.java:303:					if (event.hasControlDownWithQuirk()) {
+/tmp/all/net/minecraft/client/gui/screens/options/controls/ControlsScreen.java:30:		if (InputQuirks.EMULATE_RIGHT_CLICK_WITH_CTRL_KEY) {
+/tmp/all/net/minecraft/client/gui/font/TextFieldHelper.java:86:		TextFieldHelper.CursorStep cursorStep = event.hasControlDownWithQuirk() ? TextFieldHelper.CursorStep.WORD : TextFieldHelper.CursorStep.CHARACTER;
