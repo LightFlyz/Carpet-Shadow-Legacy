@@ -1,0 +1,4 @@
+net/minecraft/world/inventory/AbstractContainerMenu.java
+net/minecraft/world/inventory/Slot.java
+net/minecraft/world/level/block/entity/BaseContainerBlockEntity.java
+net/minecraft/world/level/block/entity/BlockEntity.java

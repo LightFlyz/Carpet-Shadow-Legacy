@@ -34,6 +34,16 @@ jobs:
           done
           sleep 5; pkill -f runServer || true; pkill -f KnotServer || true
           grep -E 'Done \(' server.log && echo SERVER_OK || echo SERVER_FAILED
+      - name: Extract MC sources
+        if: steps.build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          ./gradlew genSources -q > /dev/null 2>&1 || true
+          SJ=$(find ~/.gradle/caches .gradle -name "*minecraft*26.3*sources*.jar" 2>/dev/null | head -1)
+          echo "sources: $SJ"
+          mkdir -p mcsrc
+          for f in $(cat .github/src-files.txt 2>/dev/null); do unzip -o -q -j "$SJ" "$f" -d mcsrc || true; done
+          ls mcsrc
       - name: Inspect 26.3 API (signatures only)
         run: |
           JAR=$(find ~/.gradle/caches -name "minecraft-*26.3*.jar" ! -name "*sources*" | grep -E "merged|common|minecraft-26" | head -1)
@@ -43,7 +53,7 @@ jobs:
           done
       - name: Publish log to ci-logs branch
         run: |
-          mkdir /tmp/out && cp build.log api.txt /tmp/out/ && (cp server.log /tmp/out/ || true)
+          mkdir /tmp/out && cp build.log api.txt /tmp/out/ && (cp server.log /tmp/out/ || true) && (cp -r mcsrc /tmp/out/ || true)
           echo "${{ steps.build.outcome }} run ${{ github.run_number }} ${{ github.sha }}" > /tmp/out/status.txt
           cd /tmp/out && git init -q -b ci-logs && git add -A
           git -c user.name=ci -c user.email=ci@localhost commit -q -m "logs run ${{ github.run_number }}"
