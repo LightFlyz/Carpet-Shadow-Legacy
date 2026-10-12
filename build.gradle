@@ -29,6 +29,10 @@ repositories {
         url 'https://masa.dy.fi/maven'
     }
     maven { url 'https://jitpack.io' }
+    exclusiveContent {
+        forRepository { maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' } }
+        filter { includeGroup 'maven.modrinth' }
+    }
 }
 
 dependencies {
@@ -37,7 +41,7 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    implementation "carpet:fabric-carpet:${project.carpet_core_version}"
+    implementation "maven.modrinth:carpet:${project.carpet_core_version}"
     implementation 'de.cronn:reflection-util:2.13.2'
     include(implementation( group: 'org.apache.commons', name: 'commons-collections4', version: 'latest.release'))
 
