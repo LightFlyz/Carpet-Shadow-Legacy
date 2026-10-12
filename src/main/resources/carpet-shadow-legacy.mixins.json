@@ -35,7 +35,8 @@
     "suppression.MinecraftServerMixin",
     "suppression.DebugLevelMixin",
     "suppression.DebugDiodeMixin",
-    "suppression.ComparatorBlockMixin"
+    "suppression.ComparatorBlockMixin",
+    "fragility.InventoryPlaceBackMixin"
   ],
   "injectors": {
     "defaultRequire": 1

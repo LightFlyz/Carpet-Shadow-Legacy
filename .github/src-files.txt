@@ -8,3 +8,4 @@ net/minecraft/world/level/Level.java
 net/minecraft/world/level/block/TrapDoorBlock.java
 net/minecraft/world/level/block/state/BlockBehaviour.java
 net/minecraft/world/level/block/RedstoneDiodeBlock.java
+net/minecraft/world/entity/player/Inventory.java

@@ -114,6 +114,11 @@ public final class SuppressionSelfTest {
             catch (Throwable t) { CarpetShadowLegacy.LOGGER.info("CSL_TRAPTEST click threw {}", t.toString()); }
             CarpetShadowLegacy.LOGGER.info("CSL_TRAPTEST after click: comparatorStillThere={} hopper={} hotbar={} sameStack={}", level.getBlockState(compPos).is(Blocks.COMPARATOR),
                     hopper.getItem(0), player.getInventory().getItem(2), hopper.getItem(0) == player.getInventory().getItem(2));
+            // close the menu while holding the shadow stack on the cursor (froze 26.3 servers before the guard)
+            menu.setCarried(player.getInventory().getItem(2));
+            long t0 = System.nanoTime();
+            menu.removed(player);
+            CarpetShadowLegacy.LOGGER.info("CSL_CLOSETEST closed menu with shadow on cursor in {} ms, hotbar={}", (System.nanoTime() - t0) / 1_000_000, player.getInventory().getItem(2));
         } catch (Throwable t) {
             CarpetShadowLegacy.LOGGER.info("CSL_TRAPTEST setup failed", t);
         } finally {
