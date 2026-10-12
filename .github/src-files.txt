@@ -2,3 +2,6 @@ net/minecraft/world/inventory/AbstractContainerMenu.java
 net/minecraft/world/inventory/Slot.java
 net/minecraft/world/level/block/entity/BaseContainerBlockEntity.java
 net/minecraft/world/level/block/entity/BlockEntity.java
+net/minecraft/world/level/block/DiodeBlock.java
+net/minecraft/world/level/block/ComparatorBlock.java
+net/minecraft/world/level/Level.java
