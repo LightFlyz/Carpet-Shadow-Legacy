@@ -4,6 +4,7 @@ plugins {
 
 version = "${minecraft_version}-fabric-${mod_version}"
 group = mod_id
+base { archivesName = mod_name }
 
 repositories {
 
