@@ -29,9 +29,12 @@ jobs:
           SJ=$(find ~/.gradle/caches .gradle -name "*minecraft*26.3*sources*.jar" 2>/dev/null | head -1)
           mkdir -p mcsrc
           for f in net/minecraft/client/MouseHandler.java net/minecraft/client/input/InputQuirks.java; do unzip -o -q -j "$SJ" "$f" -d mcsrc || true; done
+          mkdir -p /tmp/all && unzip -o -q "$SJ" -d /tmp/all
+          grep -rn "EMULATE_RIGHT_CLICK_WITH_CTRL_KEY\|hasControlDownWithQuirk" /tmp/all > mcsrc/usages.txt || true
+          for f in $(grep -rl "EMULATE_RIGHT_CLICK_WITH_CTRL_KEY" /tmp/all); do cp "$f" mcsrc/; done
           JAR=$(find ~/.gradle/caches -name "minecraft-*26.3*.jar" ! -name "*sources*" | grep -E "merged|client|common" | head -1)
           javap -p -c -cp "$JAR" net.minecraft.client.MouseHandler > mcsrc/MouseHandler.javap.txt 2>&1 || true
-          python3 .github/check_targets.py mcsrc/MouseHandler.javap.txt | tee check.txt
+          set -o pipefail; python3 .github/check_targets.py mcsrc/MouseHandler.javap.txt | tee check.txt
       - name: Publish logs
         if: always()
         run: |
