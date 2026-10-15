@@ -1,3 +1,1 @@
-net/minecraft/world/level/storage/loot/predicates/LootItemCondition.java
-net/minecraft/world/level/storage/loot/predicates/LootItemConditions.java
-net/minecraft/world/level/storage/loot/functions/LootItemFunctions.java
+net/minecraft/world/level/block/entity/HopperBlockEntity.java

@@ -1,5 +1,1 @@
-dispatch("condition"
-dispatch("type"
-class LootItemConditions
-TYPED_CODEC
-dispatch("function"
+DOES_NOT_BLOCK_HOPPERS
