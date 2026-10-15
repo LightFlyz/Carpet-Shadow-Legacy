@@ -6,3 +6,11 @@ scoreboard objectives list
 bossbar list
 function multiplayer_sleep:config
 gamerule send_command_feedback
+setblock 5 201 5 minecraft:glass
+setblock 6 201 5 minecraft:red_stained_glass
+setblock 7 201 5 minecraft:stone
+execute if block 5 201 5 #minecraft:does_not_block_hoppers run say GLASS_OK
+execute if block 6 201 5 #minecraft:does_not_block_hoppers run say STAINED_OK
+execute if block 7 201 5 #minecraft:does_not_block_hoppers run say STONE_WRONGLY_IN_TAG
+execute if block 7 201 5 #minecraft:does_not_block_hoppers
+datapack list enabled
