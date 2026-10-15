@@ -1,1 +1,2 @@
-DOES_NOT_BLOCK_HOPPERS
+GOLDEN_SPEAR
+class ZombifiedPiglin

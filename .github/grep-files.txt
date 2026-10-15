@@ -1,1 +1,2 @@
-net/minecraft/world/level/block/entity/HopperBlockEntity.java
+net/minecraft/world/entity/monster/zombie/ZombifiedPiglin.java
+net/minecraft/world/entity/monster/ZombifiedPiglin.java
