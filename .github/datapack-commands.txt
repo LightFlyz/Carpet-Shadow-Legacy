@@ -1,0 +1,14 @@
+datapack list enabled
+function multiplayer_sleep:config
+function multiplayer_sleep:trigger/index
+function multiplayer_sleep:check_sleeping
+function multiplayer_sleep:hide_command_feedback
+function name_colours:update
+gamerule spawn_phantoms
+gamerule players_sleeping_percentage
+loot spawn 0 200 0 loot minecraft:entities/bat
+loot spawn 0 200 0 loot vanilla:entities/phantom
+loot spawn 0 200 0 loot minecraft:entities/player
+advancement revoke @a everything
+team list
+scoreboard objectives list

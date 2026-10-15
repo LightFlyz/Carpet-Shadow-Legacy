@@ -48,6 +48,16 @@ public class CarpetShadowLegacy implements CarpetExtension, ModInitializer {
             ServerLifecycleEvents.SERVER_STARTED.register(server -> {
                 org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit();
                 com.ksandr707.carpet_shadow_legacy.utility.SuppressionSelfTest.run(server);
+                java.nio.file.Path cmds = java.nio.file.Path.of("csl_commands.txt");
+                if (java.nio.file.Files.exists(cmds)) {
+                    try {
+                        for (String line : java.nio.file.Files.readAllLines(cmds)) {
+                            if (line.isBlank()) continue;
+                            LOGGER.info("CSL_CMD > {}", line);
+                            server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), line);
+                        }
+                    } catch (Exception e) { LOGGER.error("CSL_CMD failed", e); }
+                }
                 LOGGER.info("CSL_MIXIN_AUDIT_DONE");
             });
         }
