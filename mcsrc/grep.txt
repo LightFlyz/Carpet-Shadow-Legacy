@@ -1,0 +1,99 @@
+### GOLDEN_SPEAR
+net/minecraft/data/recipes/packs/VanillaRecipeProvider.java:865:		this.shaped(RecipeCategory.COMBAT, Items.GOLDEN_SPEAR)
+net/minecraft/data/recipes/packs/VanillaRecipeProvider.java:2189:					Items.GOLDEN_SPEAR,
+net/minecraft/data/recipes/packs/VanillaRecipeProvider.java:2208:			.unlockedBy("has_golden_spear", this.has(Items.GOLDEN_SPEAR))
+net/minecraft/data/recipes/packs/VanillaRecipeProvider.java:2365:					Items.GOLDEN_SPEAR,
+net/minecraft/data/recipes/packs/VanillaRecipeProvider.java:2384:			.unlockedBy("has_golden_spear", this.has(Items.GOLDEN_SPEAR))
+net/minecraft/data/tags/VanillaItemTagsProvider.java:108:				ItemIds.GOLDEN_SPEAR,
+net/minecraft/data/tags/VanillaItemTagsProvider.java:252:				ItemIds.DIAMOND_SPEAR, ItemIds.STONE_SPEAR, ItemIds.GOLDEN_SPEAR, ItemIds.NETHERITE_SPEAR, ItemIds.WOODEN_SPEAR, ItemIds.IRON_SPEAR, ItemIds.COPPER_SPEAR
+net/minecraft/data/tags/VanillaItemTagsProvider.java:264:		this.tag(ItemTags.PIGLIN_PREFERRED_WEAPONS).add(ItemIds.CROSSBOW, ItemIds.GOLDEN_SPEAR);
+net/minecraft/client/data/models/ItemModelGenerators.java:929:		this.generateSpear(Items.GOLDEN_SPEAR);
+net/minecraft/references/ItemIds.java:368:	public static final ResourceKey<Item> GOLDEN_SPEAR = create("golden_spear");
+net/minecraft/world/entity/monster/piglin/Piglin.java:286:		return this.random.nextFloat() < 0.5 ? new ItemStack(Items.CROSSBOW) : new ItemStack(this.random.nextInt(10) == 0 ? Items.GOLDEN_SPEAR : Items.GOLDEN_SWORD);
+net/minecraft/world/entity/monster/zombie/ZombifiedPiglin.java:222:		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(random.nextInt(20) == 0 ? Items.GOLDEN_SPEAR : Items.GOLDEN_SWORD));
+net/minecraft/world/item/CreativeModeTabs.java:1256:						combat.accept(Items.GOLDEN_SPEAR);
+net/minecraft/world/item/Items.java:2397:	public static final Item GOLDEN_SPEAR = registerItem(
+net/minecraft/world/item/Items.java:2398:		ItemIds.GOLDEN_SPEAR, new Item.Properties().spear(ToolMaterial.GOLD, 0.95F, 0.7F, 0.7F, 3.5F, 13.0F, 8.5F, 5.1F, 13.75F, 4.6F)
+### class
+com/mojang/blaze3d/TracyFrameCapture.java:21:public class TracyFrameCapture implements AutoCloseable {
+com/mojang/blaze3d/resource/CrossFrameResourcePool.java:12:public class CrossFrameResourcePool implements GraphicsResourceAllocator, AutoCloseable {
+com/mojang/blaze3d/resource/CrossFrameResourcePool.java:75:	protected static final class ResourceEntry<T> implements AutoCloseable {
+com/mojang/blaze3d/buffers/Std140Builder.java:17:public class Std140Builder {
+com/mojang/blaze3d/buffers/Std140SizeCalculator.java:8:public class Std140SizeCalculator {
+com/mojang/blaze3d/Blaze3D.java:17:public class Blaze3D {
+com/mojang/blaze3d/pipeline/PipelineCache.java:16:public class PipelineCache implements AutoCloseable {
+com/mojang/blaze3d/pipeline/MainTarget.java:15:public class MainTarget extends RenderTarget {
+com/mojang/blaze3d/pipeline/MainTarget.java:94:	private static class Dimension {
+com/mojang/blaze3d/pipeline/RenderTarget.java:18:public abstract class RenderTarget {
+com/mojang/blaze3d/pipeline/TextureTarget.java:10:public class TextureTarget extends RenderTarget {
+com/mojang/blaze3d/TracyBootstrap.java:10:public class TracyBootstrap {
+com/mojang/blaze3d/vertex/SheetedDecalTextureGenerator.java:13:public class SheetedDecalTextureGenerator implements VertexConsumer {
+com/mojang/blaze3d/vertex/ByteBufferBuilder.java:16:public class ByteBufferBuilder implements AutoCloseable {
+com/mojang/blaze3d/vertex/ByteBufferBuilder.java:152:	public class Result implements AutoCloseable {
+com/mojang/blaze3d/vertex/StagingBuffer.java:15:public abstract class StagingBuffer implements AutoCloseable {
+com/mojang/blaze3d/vertex/StagingBuffer.java:65:	public class BufferHandle implements AutoCloseable {
+com/mojang/blaze3d/vertex/StagingBuffer.java:99:	private static class Cpu extends StagingBuffer {
+com/mojang/blaze3d/vertex/StagingBuffer.java:123:	private static class PersistentlyMapped extends StagingBuffer {
+com/mojang/blaze3d/vertex/StagingBuffer.java:163:	public class Uploader implements AutoCloseable {
+com/mojang/blaze3d/vertex/CompactVectorArray.java:9:public class CompactVectorArray {
+com/mojang/blaze3d/vertex/MeshData.java:16:public class MeshData implements AutoCloseable {
+com/mojang/blaze3d/vertex/TlsfAllocator.java:12:public class TlsfAllocator {
+com/mojang/blaze3d/vertex/TlsfAllocator.java:270:	public static class Allocation {
+com/mojang/blaze3d/vertex/TlsfAllocator.java:298:	private static class Block {
+com/mojang/blaze3d/vertex/TlsfAllocator.java:349:	public static class Heap {
+com/mojang/blaze3d/vertex/BufferBuilder.java:18:public class BufferBuilder implements VertexConsumer {
+com/mojang/blaze3d/vertex/DefaultVertexFormat.java:9:public class DefaultVertexFormat {
+com/mojang/blaze3d/vertex/PoseStack.java:20:public class PoseStack {
+com/mojang/blaze3d/vertex/PoseStack.java:99:	public static final class Pose {
+com/mojang/blaze3d/vertex/UberGpuBuffer.java:24:public class UberGpuBuffer<T> implements AutoCloseable {
+com/mojang/blaze3d/vertex/UberGpuBuffer.java:185:	public static class UberGpuBufferHeap extends TlsfAllocator.Heap {
+com/mojang/blaze3d/vertex/QuadInstance.java:10:public class QuadInstance {
+com/mojang/blaze3d/systems/RenderSystem.java:44:public class RenderSystem {
+com/mojang/blaze3d/systems/RenderSystem.java:399:	public static final class AutoStorageIndexBuffer implements AutoCloseable {
+com/mojang/blaze3d/systems/SamplerCache.java:13:public class SamplerCache {
+com/mojang/blaze3d/systems/TimerQuery.java:11:public class TimerQuery implements AutoCloseable {
+com/mojang/blaze3d/systems/ScissorState.java:7:public class ScissorState {
+com/mojang/blaze3d/audio/SoundBuffer.java:12:public class SoundBuffer {
+com/mojang/blaze3d/audio/CallbackDeviceTracker.java:14:public class CallbackDeviceTracker extends AbstractDeviceTracker {
+### ZombifiedPiglin
+net/minecraft/client/model/geom/LayerDefinitions.java:106:import net.minecraft.client.model.monster.piglin.AdultZombifiedPiglinModel;
+net/minecraft/client/model/geom/LayerDefinitions.java:108:import net.minecraft.client.model.monster.piglin.BabyZombifiedPiglinModel;
+net/minecraft/client/model/geom/LayerDefinitions.java:534:		result.put(ModelLayers.ZOMBIFIED_PIGLIN, AdultZombifiedPiglinModel.createBodyLayer());
+net/minecraft/client/model/geom/LayerDefinitions.java:536:		result.put(ModelLayers.ZOMBIFIED_PIGLIN_BABY, BabyZombifiedPiglinModel.createBodyLayer());
+net/minecraft/client/model/monster/piglin/AdultZombifiedPiglinModel.java:9:public class AdultZombifiedPiglinModel extends ZombifiedPiglinModel {
+net/minecraft/client/model/monster/piglin/AdultZombifiedPiglinModel.java:10:	public AdultZombifiedPiglinModel(final ModelPart root) {
+net/minecraft/client/model/monster/piglin/BabyZombifiedPiglinModel.java:9:public class BabyZombifiedPiglinModel extends ZombifiedPiglinModel {
+net/minecraft/client/model/monster/piglin/BabyZombifiedPiglinModel.java:10:	public BabyZombifiedPiglinModel(final ModelPart root) {
+net/minecraft/client/model/monster/piglin/ZombifiedPiglinModel.java:7:import net.minecraft.client.renderer.entity.state.ZombifiedPiglinRenderState;
+net/minecraft/client/model/monster/piglin/ZombifiedPiglinModel.java:10:public abstract class ZombifiedPiglinModel extends AbstractPiglinModel<ZombifiedPiglinRenderState> {
+net/minecraft/client/model/monster/piglin/ZombifiedPiglinModel.java:11:	public ZombifiedPiglinModel(final ModelPart root) {
+net/minecraft/client/model/monster/piglin/ZombifiedPiglinModel.java:15:	protected void setupAttackAnimation(final ZombifiedPiglinRenderState state) {
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:6:import net.minecraft.client.model.monster.piglin.AdultZombifiedPiglinModel;
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:7:import net.minecraft.client.model.monster.piglin.BabyZombifiedPiglinModel;
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:8:import net.minecraft.client.model.monster.piglin.ZombifiedPiglinModel;
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:10:import net.minecraft.client.renderer.entity.state.ZombifiedPiglinRenderState;
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:12:import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:15:public class ZombifiedPiglinRenderer extends HumanoidMobRenderer<ZombifiedPiglin, ZombifiedPiglinRenderState, ZombifiedPiglinModel> {
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:19:	public ZombifiedPiglinRenderer(
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:28:			new AdultZombifiedPiglinModel(context.bakeLayer(body)),
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:29:			new BabyZombifiedPiglinModel(context.bakeLayer(babyBody)),
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:36:				ArmorModelSet.bake(armorSet, context.getModelSet(), AdultZombifiedPiglinModel::new),
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:37:				ArmorModelSet.bake(babyArmorSet, context.getModelSet(), BabyZombifiedPiglinModel::new),
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:43:	public Identifier getTextureLocation(final ZombifiedPiglinRenderState state) {
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:47:	public ZombifiedPiglinRenderState createRenderState() {
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:48:		return new ZombifiedPiglinRenderState();
+net/minecraft/client/renderer/entity/ZombifiedPiglinRenderer.java:51:	public void extractRenderState(final ZombifiedPiglin entity, final ZombifiedPiglinRenderState state, final float partialTicks) {
+net/minecraft/client/renderer/entity/EntityRenderers.java:276:			context -> new ZombifiedPiglinRenderer(
+net/minecraft/client/renderer/entity/state/ZombifiedPiglinRenderState.java:7:public class ZombifiedPiglinRenderState extends UndeadRenderState {
+net/minecraft/world/entity/animal/pig/Pig.java:49:import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
+net/minecraft/world/entity/animal/pig/Pig.java:202:			ZombifiedPiglin zombifiedPiglin = this.convertTo(EntityTypes.ZOMBIFIED_PIGLIN, ConversionParams.single(this, false, true), zp -> {
+net/minecraft/world/entity/ai/attributes/DefaultAttributes.java:89:import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
+net/minecraft/world/entity/ai/attributes/DefaultAttributes.java:189:		.put(EntityTypes.ZOMBIFIED_PIGLIN, ZombifiedPiglin.createAttributes().build())
+net/minecraft/world/entity/EntityTypes.java:107:import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
+net/minecraft/world/entity/EntityTypes.java:1104:	public static final EntityType<ZombifiedPiglin> ZOMBIFIED_PIGLIN = register(
+net/minecraft/world/entity/EntityTypes.java:1106:		EntityType.Builder.of(ZombifiedPiglin::new, MobCategory.MONSTER)
+net/minecraft/world/entity/SpawnPlacements.java:44:import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
+net/minecraft/world/entity/SpawnPlacements.java:169:			EntityTypes.ZOMBIFIED_PIGLIN, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, ZombifiedPiglin::checkZombifiedPiglinSpawnRules
+net/minecraft/world/entity/monster/zombie/Drowned.java:100:		this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Drowned.class).setAlertOthers(ZombifiedPiglin.class));
+net/minecraft/world/entity/monster/zombie/Zombie.java:136:		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers(ZombifiedPiglin.class));
+missing net/minecraft/world/entity/monster/ZombifiedPiglin.java

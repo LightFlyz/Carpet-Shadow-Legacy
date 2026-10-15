@@ -1,0 +1,131 @@
+jar: /home/runner/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged-deobf/26.3/minecraft-merged-deobf-26.3.jar
+Compiled from "RecipeManager.java"
+public class net.minecraft.world.item.crafting.RecipeManager implements net.minecraft.world.item.crafting.RecipeAccess {
+  private static final org.slf4j.Logger LOGGER;
+  private static final java.util.Map<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.RecipePropertySet>, net.minecraft.world.item.crafting.RecipeManager$IngredientExtractor> RECIPE_PROPERTY_SETS;
+  private final net.minecraft.world.item.crafting.RecipeMap recipes;
+  private java.util.Map<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.RecipePropertySet>, net.minecraft.world.item.crafting.RecipePropertySet> propertySets;
+  private net.minecraft.world.item.crafting.SelectableRecipe$SingleInputSet<net.minecraft.world.item.crafting.StonecutterRecipe> stonecutterRecipes;
+  private java.util.List<net.minecraft.world.item.crafting.RecipeManager$ServerDisplayInfo> allDisplays;
+  private java.util.Map<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>, java.util.List<net.minecraft.world.item.crafting.RecipeManager$ServerDisplayInfo>> recipeToDisplay;
+  private final java.util.Collection<net.minecraft.world.item.crafting.RecipeHolder<?>> learnableRecipes;
+  public net.minecraft.world.item.crafting.RecipeManager(net.minecraft.core.HolderLookup$Provider);
+  public void finalizeRecipeLoading(net.minecraft.world.flag.FeatureFlagSet);
+  private static java.util.List<net.minecraft.world.item.crafting.Ingredient> filterDisabled(net.minecraft.world.flag.FeatureFlagSet, java.util.List<net.minecraft.world.item.crafting.Ingredient>);
+  private static boolean isIngredientEnabled(net.minecraft.world.flag.FeatureFlagSet, net.minecraft.world.item.crafting.Ingredient);
+  public <I extends net.minecraft.world.item.crafting.RecipeInput, T extends net.minecraft.world.item.crafting.Recipe<I>> java.util.Optional<net.minecraft.world.item.crafting.RecipeHolder<T>> getRecipeFor(net.minecraft.world.item.crafting.RecipeType<T>, I, net.minecraft.world.level.Level, net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>);
+  public <I extends net.minecraft.world.item.crafting.RecipeInput, T extends net.minecraft.world.item.crafting.Recipe<I>> java.util.Optional<net.minecraft.world.item.crafting.RecipeHolder<T>> getRecipeFor(net.minecraft.world.item.crafting.RecipeType<T>, I, net.minecraft.world.level.Level, net.minecraft.world.item.crafting.RecipeHolder<T>);
+  public <I extends net.minecraft.world.item.crafting.RecipeInput, T extends net.minecraft.world.item.crafting.Recipe<I>> java.util.Optional<net.minecraft.world.item.crafting.RecipeHolder<T>> getRecipeFor(net.minecraft.world.item.crafting.RecipeType<T>, I, net.minecraft.world.level.Level);
+  public java.util.Optional<net.minecraft.world.item.crafting.RecipeHolder<?>> byKey(net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>);
+  private <T extends net.minecraft.world.item.crafting.Recipe<?>> net.minecraft.world.item.crafting.RecipeHolder<T> byKeyTyped(net.minecraft.world.item.crafting.RecipeType<T>, net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>);
+  public java.util.Map<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.RecipePropertySet>, net.minecraft.world.item.crafting.RecipePropertySet> getSynchronizedItemProperties();
+  public net.minecraft.world.item.crafting.SelectableRecipe$SingleInputSet<net.minecraft.world.item.crafting.StonecutterRecipe> getSynchronizedStonecutterRecipes();
+  public net.minecraft.world.item.crafting.RecipePropertySet propertySet(net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.RecipePropertySet>);
+  public net.minecraft.world.item.crafting.SelectableRecipe$SingleInputSet<net.minecraft.world.item.crafting.StonecutterRecipe> stonecutterRecipes();
+  public java.util.Collection<net.minecraft.world.item.crafting.RecipeHolder<?>> getRecipes();
+  public java.util.Collection<net.minecraft.world.item.crafting.RecipeHolder<?>> getLearnableRecipes();
+  public net.minecraft.world.item.crafting.RecipeManager$ServerDisplayInfo getRecipeFromDisplay(net.minecraft.world.item.crafting.display.RecipeDisplayId);
+  public void listDisplaysForRecipe(net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>, java.util.function.Consumer<net.minecraft.world.item.crafting.display.RecipeDisplayEntry>);
+  public static <I extends net.minecraft.world.item.crafting.RecipeInput, T extends net.minecraft.world.item.crafting.Recipe<I>> net.minecraft.world.item.crafting.RecipeManager$CachedCheck<I, T> createCheck(net.minecraft.world.item.crafting.RecipeType<T>);
+  private static java.util.List<net.minecraft.world.item.crafting.RecipeManager$ServerDisplayInfo> unpackRecipeInfo(java.lang.Iterable<net.minecraft.world.item.crafting.RecipeHolder<?>>, net.minecraft.world.flag.FeatureFlagSet);
+  private static net.minecraft.world.item.crafting.RecipeManager$IngredientExtractor forSingleInput(net.minecraft.world.item.crafting.RecipeType<? extends net.minecraft.world.item.crafting.SingleItemRecipe>);
+  private static java.util.Optional lambda$forSingleInput$0(net.minecraft.world.item.crafting.RecipeType, net.minecraft.world.item.crafting.Recipe);
+  private static int lambda$unpackRecipeInfo$0(it.unimi.dsi.fastutil.objects.Object2IntMap, java.lang.Object);
+  private static void lambda$listDisplaysForRecipe$0(java.util.function.Consumer, net.minecraft.world.item.crafting.RecipeManager$ServerDisplayInfo);
+  private static boolean lambda$isIngredientEnabled$0(net.minecraft.world.flag.FeatureFlagSet, net.minecraft.core.Holder);
+  private static boolean lambda$filterDisabled$0(net.minecraft.world.flag.FeatureFlagSet, net.minecraft.world.item.crafting.Ingredient);
+  private static net.minecraft.resources.ResourceKey lambda$finalizeRecipeLoading$5(net.minecraft.world.item.crafting.RecipeManager$ServerDisplayInfo);
+  private static net.minecraft.world.item.crafting.RecipePropertySet lambda$finalizeRecipeLoading$4(net.minecraft.world.flag.FeatureFlagSet, net.minecraft.world.item.crafting.RecipeManager$IngredientCollector);
+  private static net.minecraft.resources.ResourceKey lambda$finalizeRecipeLoading$3(net.minecraft.world.item.crafting.RecipeManager$IngredientCollector);
+  private static void lambda$finalizeRecipeLoading$1(java.util.List, net.minecraft.world.flag.FeatureFlagSet, java.util.List, net.minecraft.world.item.crafting.RecipeHolder);
+  private static void lambda$finalizeRecipeLoading$2(net.minecraft.world.item.crafting.Recipe, net.minecraft.world.item.crafting.RecipeManager$IngredientCollector);
+  private static net.minecraft.world.item.crafting.RecipeManager$IngredientCollector lambda$finalizeRecipeLoading$0(java.util.Map$Entry);
+  private static boolean lambda$new$0(net.minecraft.world.item.crafting.RecipeHolder);
+  private static java.util.Optional lambda$static$4(net.minecraft.world.item.crafting.Recipe);
+  private static java.util.Optional lambda$static$3(net.minecraft.world.item.crafting.Recipe);
+  private static java.util.Optional lambda$static$2(net.minecraft.world.item.crafting.Recipe);
+  private static java.util.Optional lambda$static$1(net.minecraft.world.item.crafting.Recipe);
+  private static java.util.Optional lambda$static$0(net.minecraft.world.item.crafting.Recipe);
+  static {};
+}
+Compiled from "InstantNeighborUpdater.java"
+public class net.minecraft.world.level.redstone.InstantNeighborUpdater implements net.minecraft.world.level.redstone.NeighborUpdater {
+  private final net.minecraft.world.level.Level level;
+  public net.minecraft.world.level.redstone.InstantNeighborUpdater(net.minecraft.world.level.Level);
+  public void shapeUpdate(net.minecraft.core.Direction, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos, net.minecraft.core.BlockPos, int, int);
+  public void neighborChanged(net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.world.level.redstone.Orientation);
+  public void neighborChanged(net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.world.level.redstone.Orientation, boolean);
+}
+Compiled from "NeighborUpdater.java"
+public interface net.minecraft.world.level.redstone.NeighborUpdater {
+  public static final net.minecraft.core.Direction[] UPDATE_ORDER;
+  public abstract void shapeUpdate(net.minecraft.core.Direction, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos, net.minecraft.core.BlockPos, int, int);
+  public abstract void neighborChanged(net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.world.level.redstone.Orientation);
+  public abstract void neighborChanged(net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.world.level.redstone.Orientation, boolean);
+  public default void updateNeighborsAtExceptFromFacing(net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.core.Direction, net.minecraft.world.level.redstone.Orientation);
+  public static void executeShapeUpdate(net.minecraft.world.level.LevelAccessor, net.minecraft.core.Direction, net.minecraft.core.BlockPos, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, int, int);
+  public static void executeUpdate(net.minecraft.world.level.Level, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.world.level.redstone.Orientation, boolean);
+  private static java.lang.String lambda$executeUpdate$0(net.minecraft.world.level.block.Block) throws java.lang.Exception;
+  static {};
+}
+Compiled from "CraftingMenu.java"
+public class net.minecraft.world.inventory.CraftingMenu extends net.minecraft.world.inventory.AbstractCraftingMenu {
+  private static final int CRAFTING_GRID_WIDTH;
+  private static final int CRAFTING_GRID_HEIGHT;
+  public static final int RESULT_SLOT;
+  private static final int CRAFT_SLOT_START;
+  private static final int CRAFT_SLOT_COUNT;
+  private static final int CRAFT_SLOT_END;
+  private static final int INV_SLOT_START;
+  private static final int INV_SLOT_END;
+  private static final int USE_ROW_SLOT_START;
+  private static final int USE_ROW_SLOT_END;
+  private final net.minecraft.world.inventory.ContainerLevelAccess access;
+  private final net.minecraft.world.entity.player.Player player;
+  private boolean placingRecipe;
+  public net.minecraft.world.inventory.CraftingMenu(int, net.minecraft.world.entity.player.Inventory);
+  public net.minecraft.world.inventory.CraftingMenu(int, net.minecraft.world.entity.player.Inventory, net.minecraft.world.inventory.ContainerLevelAccess);
+  protected static void slotChangedCraftingGrid(net.minecraft.world.inventory.AbstractContainerMenu, net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.player.Player, net.minecraft.world.inventory.CraftingContainer, net.minecraft.world.inventory.ResultContainer, net.minecraft.world.item.crafting.RecipeHolder<net.minecraft.world.item.crafting.CraftingRecipe>);
+  public void slotsChanged(net.minecraft.world.Container);
+  public void beginPlacingRecipe();
+  public void finishPlacingRecipe(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.crafting.RecipeHolder<net.minecraft.world.item.crafting.CraftingRecipe>);
+  public void removed(net.minecraft.world.entity.player.Player);
+  public boolean stillValid(net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.item.ItemStack quickMoveStack(net.minecraft.world.entity.player.Player, int);
+  public boolean canTakeItemForPickAll(net.minecraft.world.item.ItemStack, net.minecraft.world.inventory.Slot);
+  public net.minecraft.world.inventory.Slot getResultSlot();
+  public java.util.List<net.minecraft.world.inventory.Slot> getInputGridSlots();
+  public net.minecraft.world.inventory.RecipeBookType getRecipeBookType();
+  protected net.minecraft.world.entity.player.Player owner();
+  private void lambda$removed$0(net.minecraft.world.entity.player.Player, net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+  private void lambda$slotsChanged$0(net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+}
+Compiled from "CustomRecipe.java"
+public abstract class net.minecraft.world.item.crafting.CustomRecipe implements net.minecraft.world.item.crafting.CraftingRecipe {
+  public net.minecraft.world.item.crafting.CustomRecipe();
+  public boolean isSpecial();
+  public boolean showNotification();
+  public java.lang.String group();
+  public net.minecraft.world.item.crafting.CraftingBookCategory category();
+  public net.minecraft.world.item.crafting.PlacementInfo placementInfo();
+  public abstract net.minecraft.world.item.crafting.RecipeSerializer<? extends net.minecraft.world.item.crafting.CustomRecipe> getSerializer();
+}
+Compiled from "CollectingNeighborUpdater.java"
+public class net.minecraft.world.level.redstone.CollectingNeighborUpdater implements net.minecraft.world.level.redstone.NeighborUpdater {
+  private static final org.slf4j.Logger LOGGER;
+  private final net.minecraft.world.level.Level level;
+  private final int maxChainedNeighborUpdates;
+  private final java.util.ArrayDeque<net.minecraft.world.level.redstone.CollectingNeighborUpdater$NeighborUpdates> stack;
+  private final java.util.List<net.minecraft.world.level.redstone.CollectingNeighborUpdater$NeighborUpdates> addedThisLayer;
+  private int count;
+  private java.util.function.Consumer<net.minecraft.core.BlockPos> debugListener;
+  public net.minecraft.world.level.redstone.CollectingNeighborUpdater(net.minecraft.world.level.Level, int);
+  public void setDebugListener(java.util.function.Consumer<net.minecraft.core.BlockPos>);
+  public void shapeUpdate(net.minecraft.core.Direction, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos, net.minecraft.core.BlockPos, int, int);
+  public void neighborChanged(net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.world.level.redstone.Orientation);
+  public void neighborChanged(net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.world.level.redstone.Orientation, boolean);
+  public void updateNeighborsAtExceptFromFacing(net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.core.Direction, net.minecraft.world.level.redstone.Orientation);
+  private void addAndRun(net.minecraft.core.BlockPos, net.minecraft.world.level.redstone.CollectingNeighborUpdater$NeighborUpdates);
+  private void runUpdates();
+  static {};
+}
