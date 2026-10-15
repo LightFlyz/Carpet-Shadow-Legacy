@@ -45,6 +45,11 @@ jobs:
           echo "sources: $SJ"
           mkdir -p mcsrc
           for f in $(cat .github/src-files.txt 2>/dev/null); do unzip -o -q -j "$SJ" "$f" -d mcsrc || true; done
+          mkdir -p /tmp/allsrc && unzip -o -q "$SJ" -d /tmp/allsrc
+          for pat in $(cat .github/grep.txt 2>/dev/null); do echo "### $pat"; grep -rn --include=*.java "$pat" /tmp/allsrc | sed 's|/tmp/allsrc/||' | head -40; done > mcsrc/grep.txt
+          for f in $(cat .github/grep-files.txt 2>/dev/null); do cp "/tmp/allsrc/$f" mcsrc/ 2>/dev/null || echo "missing $f" >> mcsrc/grep.txt; done
+          MCJ=$(find ~/.gradle/caches -name "minecraft-server*26.3*.jar" -o -name "server-26.3*.jar" | head -1); [ -z "$MCJ" ] && MCJ=$(find ~/.gradle/caches -path "*26.3*" -name "*.jar" | xargs -I{} sh -c 'unzip -l "{}" 2>/dev/null | grep -q " version.json$" && echo "{}"' | head -1)
+          unzip -p "$MCJ" version.json > mcsrc/version.json 2>/dev/null || echo "no version.json in $MCJ" > mcsrc/version.json
           ls mcsrc
       - name: Inspect 26.3 API (signatures only)
         run: |

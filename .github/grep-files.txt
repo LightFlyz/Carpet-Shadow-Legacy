@@ -1,0 +1,4 @@
+net/minecraft/network/chat/ClickEvent.java
+net/minecraft/network/chat/HoverEvent.java
+net/minecraft/world/level/storage/loot/functions/SetLoreFunction.java
+net/minecraft/advancements/criterion/PlayerTrigger.java
