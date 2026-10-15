@@ -147,7 +147,12 @@ public final class SuppressionSelfTest {
                     for (int x = 0; x < len; x++) level.updateNeighborsAt(base.offset(x, 0, 0), Blocks.POWERED_RAIL);
                     UpdateDepth.DEPTH.get()[1] = 0;
                     // pull every power source at once by replacing them in one cascade
-                    for (int x = 0; x < len; x += 8) level.setBlock(base.offset(x, -1, 0), Blocks.STONE.defaultBlockState(), 3);
+                    long t0 = System.nanoTime();
+                    try {
+                        for (int x = 0; x < len; x += 8) level.setBlock(base.offset(x, -1, 0), Blocks.STONE.defaultBlockState(), 3);
+                    } finally {
+                        CarpetShadowLegacy.LOGGER.info("CSL_SELFTEST classic={} len={} took {} ms", classic, len, (System.nanoTime() - t0) / 1_000_000);
+                    }
                     CarpetShadowLegacy.LOGGER.info("CSL_SELFTEST classic={} len={} maxDepth={} ok", classic, len, UpdateDepth.DEPTH.get()[1]);
                 } catch (Throwable t) {
                     Throwable c = t; boolean so = false;

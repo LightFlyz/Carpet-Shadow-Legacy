@@ -9,3 +9,6 @@ net/minecraft/world/level/block/TrapDoorBlock.java
 net/minecraft/world/level/block/state/BlockBehaviour.java
 net/minecraft/world/level/block/RedstoneDiodeBlock.java
 net/minecraft/world/entity/player/Inventory.java
+net/minecraft/SystemReport.java
+net/minecraft/CrashReport.java
+net/minecraft/world/level/redstone/NeighborUpdater.java

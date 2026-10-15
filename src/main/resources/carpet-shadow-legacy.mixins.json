@@ -36,7 +36,8 @@
     "suppression.DebugLevelMixin",
     "suppression.DebugDiodeMixin",
     "suppression.ComparatorBlockMixin",
-    "fragility.InventoryPlaceBackMixin"
+    "fragility.InventoryPlaceBackMixin",
+    "suppression.SystemReportMixin"
   ],
   "injectors": {
     "defaultRequire": 1
