@@ -35,7 +35,7 @@ jobs:
           (timeout 600 ./gradlew runServer > server.log 2>&1 &)
           for i in $(seq 1 120); do
             sleep 5
-            if grep -q -E 'Done \(|Exception in server tick loop|Crash report|Mixin apply.*failed' server.log; then break; fi
+            if grep -q -E 'Done \(|Exception in server tick loop|Crash report|Mixin apply.*failed|Failed to load datapacks' server.log; then break; fi
           done
           sleep 5; pkill -f runServer || true; pkill -f KnotServer || true
           grep -E 'Done \(' server.log && echo SERVER_OK || echo SERVER_FAILED
